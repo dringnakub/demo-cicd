@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Button } from 'react-bootstrap'
+import { Container, Row, Button, Col, Form } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import Route from 'next/router'
@@ -10,7 +10,18 @@ export default class ConfirmOrder extends React.Component {
   constructor(props) {
     super(props)
 
-    this.submitOrder = this.submitOrder.bind(this)
+    // this.submitOrder = this.submitOrder.bind(this)
+    this.submitForm = this.submitForm.bind(this)
+  }
+
+  state = {
+    form: {
+      address1: "",
+      address2: "",
+      postcode: "",
+      country: "",
+      tel: ""
+    }
   }
 
   createCookies() {
@@ -59,49 +70,122 @@ export default class ConfirmOrder extends React.Component {
       })
   }
 
+  handleChange(event) {
+    this.setState({ address1: event.target.value });
+  }
+
+  submitForm(event) {
+    event.preventDefault()
+    console.log(this.state)
+  }
+
   render() {
     this.createCookies()
     const productList = Cookies.getJSON('cart')
     return (
       <Container>
-        <Row>ยืนยันคำสั่งซื้อ</Row>
         <Row>
-          <div>ที่อยู่ในการจัดส่ง:</div>
-          <div>
-            คุณ
-            {' '}
-            <span id="receiverName">ณัฐญา ชุติบุตร</span>
-            <span id="recevierAddress">405/37 ถ.มหิดล ต.ท่าศาลา อ.เมือง จ.เชียงใหม่ 50000</span>
-            <span id="recevierPhonenumber">0970809292</span>
-          </div>
+          <Col>
+            <h4>
+              ยืนยันคำสั่งซื้อ
+            </h4>
+          </Col>
+          <hr style={{ width: "100%" }} />
         </Row>
-        <div>
-          <div>รายการชำระเงิน</div>
-          <table>
-            <tr>
-              <td>ค่าสินค้า</td>
-              <td id="totalProductPrice">12.95 USD</td>
-            </tr>
-            <tr>
-              <td>ค่าจัดส่ง</td>
-              <td id="totalShippingCharge">2.00 USD</td>
-            </tr>
-            <tr>
-              <td>รวมทั้งสิ้น</td>
-              <td id="totalAmount">14.95 USD</td>
-            </tr>
-          </table>
-        </div>
-        <div>
-          <div>รายการสินค้า</div>
-          <div>
-            {productList && <CartItem item={productList} />}
-          </div>
-        </div>
-        <div>
-          <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
-          <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
-        </div>
+        <Row>
+          <Col lg={4}>
+            <h4>
+              Shipping Address:
+            </h4>
+          </Col>
+          <hr style={{ width: "100%" }} />
+        </Row>
+        <Form style={{ "width": "100%" }} onSubmit={this.submitForm}>
+          <Form.Group as={Row} controlId="formHorizontalAddress1">
+            <Form.Label column lg={2}>
+              Address1
+            </Form.Label>
+            <Col lg={6}>
+              <Form.Control type="text" value={this.state.address1}
+                onChange={e => this.setState({ form: { ...this.state.form, address1: e.target.value } })}
+              />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalAddress2">
+            <Form.Label column lg={2}>
+              Address2
+              </Form.Label>
+            <Col lg={6}>
+              <Form.Control type="text" value={this.state.address2} onChange={e => this.setState({ form: { ...this.state.form, address2: e.target.value } })} />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalPostCode">
+            <Form.Label column lg={2}>
+              Postcode
+            </Form.Label>
+            <Col lg={6}>
+              <Form.Control type="text" value={this.state.postcode} onChange={e => this.setState({ form: { ...this.state.form, postcode: e.target.value } })} />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalCountry">
+            <Form.Label column lg={2}>
+              Country
+            </Form.Label>
+            <Col lg={6}>
+              <Form.Control type="text" />
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} controlId="formHorizontalTel">
+            <Form.Label column lg={2}>
+              Tel
+            </Form.Label>
+            <Col lg={6}>
+              <Form.Control type="text" />
+            </Col>
+          </Form.Group>
+
+
+          <Form.Group as={Row} controlId="buttonSubmit">
+            <Col lg={{ span: 10, offset: 2 }}>
+              <Button type="submit">Sign in</Button>
+            </Col>
+          </Form.Group>
+        </Form>
+        <Row>
+          <Col>รายการชำระเงิน</Col>
+          <Col>
+            <Row>
+              <Col>ค่าสินค้า</Col>
+              <Col id="totalProductPrice">12.95 USD</Col>
+            </Row>
+            <Row>
+              <Col>ค่าจัดส่ง</Col>
+              <Col id="totalShippingCharge">2.00 USD</Col>
+            </Row>
+            <Row>
+              <Col>รวมทั้งสิ้น</Col>
+              <Col id="totalAmount">14.95 USD</Col>
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col>รายการสินค้า</Col>
+        </Row>
+        <Row>
+          {productList && <CartItem item={productList} />}
+        </Row>
+        <Row>
+          <Col>
+            <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
+          </Col>
+          <Col>
+            <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
+          </Col>
+        </Row>
       </Container>
     )
   }
