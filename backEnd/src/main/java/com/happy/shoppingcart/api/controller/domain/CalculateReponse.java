@@ -16,15 +16,19 @@ public class CalculateReponse {
     @JsonProperty("status_code")
     private String statusCode;
 
+    @JsonProperty("message")
     private String message;
 
-    private BigDecimal point;
+    @JsonProperty("point")
+    private int point;
 
+    @JsonProperty("total")
     private BigDecimal total;
 
     @JsonProperty("cart_id")
     private int cartId;
 
-    private List<ProductPayload> payload;
+    @JsonProperty("payload")
+    private List<CalculateResponsePayload> payload;
     
 }
