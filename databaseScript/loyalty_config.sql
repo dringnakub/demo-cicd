@@ -37,3 +37,15 @@ INSERT INTO `loyalty_config` (`row_id`, `point_rate`, `created_at`) VALUES
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- db.currency definition
+
+CREATE TABLE `currency` (
+  `row_id` varchar(45) NOT NULL,
+  `exc_rate_date` datetime NOT NULL,
+  `exc_rate` decimal(10,0) NOT NULL,
+  `currency_code` varchar(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO db.currency (row_id,exc_rate_date,exc_rate,currency_code) VALUES
+('uuid01','2020-12-03 00:00:00',35,'USD')
+;
