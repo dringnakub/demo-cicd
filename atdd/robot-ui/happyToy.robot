@@ -1,6 +1,5 @@
 *** Settings ***
 Library    SeleniumLibrary
-
 *** Test Cases ***
 ซื้อของเล่น OMG-Gossip Girl จำนวน 1 ชิ้น ด้วยบัตร Visa ส่งผ่าน Kerry ได้คะแนน 15 points และได้รับการแจ้งเตือนทางอีเมล
     เลือกของเล่น    productId=123    productName=OMG-Gossip Girl
