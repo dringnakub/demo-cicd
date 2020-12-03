@@ -3,3 +3,6 @@
 target/
 /atdd/api-test/data/node_modules
 rest-demo
+atdd/api-test/data/node_modules
+my-db/
+my-db/
