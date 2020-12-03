@@ -3,7 +3,7 @@ import { Container, Form, Row, Col, Button, CardDeck } from "react-bootstrap";
 import Route from "next/router";
 import ProductCard from "../components/ProductCard";
 
-export default class ProductList extends React.Component {
+export default class Cart extends React.Component {
   getProductDetail() {
     Route.push("/Product-detail");
   }

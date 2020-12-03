@@ -1,65 +1,77 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from "react";
+import { Container, Form, Row, Col, Button, CardDeck } from "react-bootstrap";
+import Route from "next/router";
+import ProductCard from "../components/ProductCard";
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default class Home extends React.Component {
+  getProductDetail() {
+    Route.push("/Product-detail");
+  }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+  render() {
+    const item = [
+      {
+        productImage:
+          "17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
+        productName: "43 Piece Dinner Set",
+        productPrice: "12.95 USD",
+        getProductDetail: this.getProductDetail.bind(this),
+      },
+      {
+        productImage:
+          "61uc4bgUPlL._AC_SL1500_.jpg",
+        productName: "Balance Training Bicycle",
+        productPrice: "119.95 USD",
+        getProductDetail: this.getProductDetail.bind(this),
+      },
+    ];
+    return (
+      <Container>
+        <Form>
+          <Form.Row>
+            <Form.Group as={Col} controlId="inputAge">
+              <Form.Label>Select age</Form.Label>
+              <Form.Control
+                as="select"
+                className="mr-sm-2"
+                id="inputAge"
+                custom
+              >
+                <option value="select">Choose</option>
+                <option value="1">1-3</option>
+                <option value="2">3-10</option>
+              </Form.Control>
+            </Form.Group>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+            <Form.Group as={Col} controlId="inputGender">
+              <Form.Label>Select gender</Form.Label>
+              <Form.Control
+                as="select"
+                className="mr-sm-2"
+                id="inputGender"
+                custom
+              >
+                <option value="select">Choose</option>
+                <option value="girl">girl</option>
+                <option value="boy">boy</option>
+                <option value="unisex">unisex</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group as={Col} controlId="inputGender">
+              <Button
+                id="search"
+                variant="primary"
+                type="submit"
+                className="btn-custom"
+              >
+                Search
+              </Button>
+            </Form.Group>
+          </Form.Row>
+        </Form>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        <ProductCard item={item} />
+      </Container>
+    );
+  }
 }
