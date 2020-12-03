@@ -12,6 +12,11 @@
     ```
 2. Application will be running on host URL: http://localhost:8080
 
+### Build image
+Run command
+    
+    ./mvnw spring-boot:build-image
+
 ## Coding convention
 ### Naming
 1. Class -> Upper camel case
