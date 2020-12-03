@@ -6,16 +6,21 @@ import com.happy.shoppingcart.api.service.CalculateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import com.happy.shoppingcart.api.controller.domain.ProductPayload;
+import com.happy.shoppingcart.api.service.ProductService;
+import com.happy.shoppingcart.common.entities.ProductTb;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
+    
+    @Autowired
+    private ProductService productService;
 
     @Autowired private CalculateService calculateService;
 
@@ -24,6 +29,31 @@ public class ProductController {
                                             @RequestParam(name = "cart_id", required = false) Integer cartId){
         CalculateReponse reponse = calculateService.calculatePrice(productId);
         return ResponseEntity.ok().body(reponse);
+    }
+    
+    @GetMapping("list")
+    public ResponseEntity<ProductResponse> getProductList(
+            @RequestParam(name = "age", required = false) Integer age,
+            @RequestParam(name = "gender", required = false) String gender) {
+
+        ProductResponse response = new ProductResponse();
+        response.setStatusCode(200);
+        response.setMessage("success");
+
+        List<ProductTb> ProductTbList = productService.getProductList(age, gender);
+        List<ProductPayload> responsePayloadList = new ArrayList<>();
+        if (ProductTbList != null) {
+            for (ProductTb ProductTb : ProductTbList) {
+                ProductPayload productPayload = new ProductPayload();
+                productPayload.setProductId(ProductTb.getProductId());
+                productPayload.setProductName(ProductTb.getProductName());
+                productPayload.setPrice(ProductTb.getPrice() == null ? 0.0 : ProductTb.getPrice().doubleValue());
+                productPayload.setImage(ProductTb.getImg());
+                responsePayloadList.add(productPayload);
+            }
+        }
+        response.setPayload(responsePayloadList);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("calculate")

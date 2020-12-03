@@ -9,5 +9,6 @@ public class ProductPayload {
     private Integer productId;
     @JsonProperty("product_name")
     private String productName;
-    private Integer price;
+    private Double price;
+    private String image;
 }
