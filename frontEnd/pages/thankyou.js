@@ -1,30 +1,70 @@
 import React from 'react'
-import { Container, Button, Image } from 'react-bootstrap'
-import Route from 'next/router'
+import { Col, Row, Container, Button, Image } from 'react-bootstrap'
+import Route, { useRouter } from 'next/router'
 
+const PaymentSucess = () => {
+  const router = useRouter()
+  const { orderId, trackingId } = router.query
 
-export default class PaymentSucess extends React.Component {
-  constructor() {
-    super()
-    this.message = 'วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900'
+  function onClickOkButton() {
+    Route.push('/')
   }
 
-  goHome() {
-    Route.push('/Product-list')
-  }
+  return (
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <h1 id="thankyou">
+            {'Thankyou'}
+          </h1>
+        </Col>
+      </Row>
 
-  render() {
-    return (
-      <Container>
-        <div>
-          <h1 id="title">ชำระเงินสำเร็จ</h1>
+      <Row className="justify-content-md-center">
+        <Col sm={12}>
           <Image src="https://www.pngitem.com/pimgs/m/69-692608_transparent-answer-icon-png-check-pass-icon-png.png" width="8%" />
-          <div id="notify">
-            {this.message}
-          </div>
-          <Button id="goHome" onClick={() => this.goHome()}>กลับไปหน้าหลัก</Button>
-        </div>
-      </Container>
-    )
-  }
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <p id="success">
+            {'Successfully'}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <p id="order_id">
+            {`Order ID : ${orderId}`}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <p id="tracking_id">
+            {`Tracking ID : ${trackingId}`}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <p id="check_email">
+            {'Please check your email'}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <Button id="ok_button" onClick={onClickOkButton}>{'OK'}</Button>
+        </Col>
+      </Row>
+    </Container>
+  )
 }
+
+export default PaymentSucess
