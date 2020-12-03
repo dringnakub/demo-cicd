@@ -42,5 +42,10 @@
   "calculate": {
     "shipping_id": 1,
     "cart_id": 2
+  },
+  "transaction": {
+    "point": "7",
+    "total": "755.985",
+    "shipping_free": "40"
   }
 }
