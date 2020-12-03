@@ -1,8 +1,10 @@
 package com.happy.shoppingcart.api.service;
 
+import com.happy.shoppingcart.api.controller.domain.ProductResponse;
 import com.happy.shoppingcart.common.entities.ProductDb;
 import com.happy.shoppingcart.common.entities.Shipping;
 import com.happy.shoppingcart.common.entities.ShoppingCart;
+import com.happy.shoppingcart.common.repo.ProductDbRepo;
 import com.happy.shoppingcart.common.repo.ShippingRepo;
 import com.happy.shoppingcart.common.repo.ShoppingCartRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,14 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    
+
     @Autowired
     private ShoppingCartRepo shoppingRepos;
     @Autowired
     private ShippingRepo shippingRepos;
+    @Autowired
+    private ProductDbRepo productRepos;
+
 
     private ShoppingCart getCart(int id) {
         Optional<ShoppingCart> result = shoppingRepos.findById(id);
@@ -30,15 +35,28 @@ public class ProductService {
         return result.get();
     }
 
+    private ProductDb getProductListById(int productId) {
+        Optional<ProductDb> result = productRepos.findById(productId);
+        return result.get();
+    }
+
 //    public ProductResponse calculate(int shippingId, int cartId) {
 //        ProductResponse response = new ProductResponse();
 //        ShoppingCart dtCart = this.getCart(cartId);
 //        Shipping dtShipping = this.getShipping(shippingId);
-//        dtCart
+//        ProductDb dtProduct = this.getProductListById(dtCart.getProductId());
+//        Integer totalWithShipping = dtShipping.getShippingRate() + dtProduct.getPrice();
+//        response.setCartId(dtCart.getCartId());
+//        response.setMessage("Successfully");
+//        response.setPoint(dtProduct.getPrice());
+//        response.setTotalWithShip();
+//
 //        return
 //    }
 
     public List<ProductDb> getProductList(@Nullable Integer age, @Nullable String gender) {
         return null;
     }
+
+
 }
