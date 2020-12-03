@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @GetMapping("/add_cart")
-    public ResponseEntity<String> addCart(@RequestParam(name = "product_id") String productId,
-                                            @RequestParam(name = "cart_id") String cartId){
+    public ResponseEntity<String> addCart(@RequestParam(name = "product_id") int productId,
+                                            @RequestParam(name = "cart_id") int cartId){
         
         return ResponseEntity.ok().body("");
     }
