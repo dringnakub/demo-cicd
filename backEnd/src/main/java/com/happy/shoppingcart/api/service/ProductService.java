@@ -3,6 +3,7 @@ package com.happy.shoppingcart.api.service;
 import com.happy.shoppingcart.common.entities.ProductDb;
 import com.happy.shoppingcart.common.entities.Shipping;
 import com.happy.shoppingcart.common.entities.ShoppingCart;
+import com.happy.shoppingcart.common.repo.ProductDbRepo;
 import com.happy.shoppingcart.common.repo.ShippingRepo;
 import com.happy.shoppingcart.common.repo.ShoppingCartRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class ProductService {
     private ShoppingCartRepo shoppingRepos;
     @Autowired
     private ShippingRepo shippingRepos;
+    @Autowired
+    private ProductDbRepo productDbRepos;
 
     private ShoppingCart getCart(int id) {
         Optional<ShoppingCart> result = shoppingRepos.findById(id);
@@ -39,6 +42,16 @@ public class ProductService {
 //    }
 
     public List<ProductDb> getProductList(@Nullable Integer age, @Nullable String gender) {
-        return null;
+
+        if (age != null && gender != null) {
+            return this.productDbRepos.findByAgeAndGender(age, gender);
+        }
+        if (age == null && gender == null) {
+            return this.productDbRepos.findAll();
+        }
+        if (age != null) {
+            return this.productDbRepos.findByAge(age);
+        }
+        return this.productDbRepos.findByGender(gender);
     }
 }
