@@ -18,3 +18,15 @@
 2. Non-static variable -> lower camel case
 3. Static variable -> upper snake case
 4. Method -> lower camel case
+
+### Project structure
+    
+    backEnd/
+        src/main/java/com/happy/shoppingcart/
+            product/
+            cart/
+            order/
+            transaction/
+            common/
+                service/
+                    DatatimeService.java

@@ -21,7 +21,7 @@ public class SampleService {
     }
     
     public List<String> getNameByAge(int age) {
-        
+
         if (this.peopleNameByAge.containsKey(age)) return this.peopleNameByAge.get(age);
         return new ArrayList<>();
     }
