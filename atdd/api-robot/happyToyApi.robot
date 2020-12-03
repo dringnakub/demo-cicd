@@ -45,12 +45,12 @@ Success Case    success_status_code=0
 
 *** Keywords ***
 Checkout Product
-    Get Product List       ${success_status_code}    ${success_status_message}
+    # Get Product List       ${success_status_code}    ${success_status_message}
     Add Product To Cart    ${success_status_code}    ${success_status_message}    ${product_id}    ${expected_price}
-    Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
-    Create Transaction     ${success_status_code}    ${success_status_message}
-    Get Transaction        ${success_status_code}    ${success_status_message}    ${shipping_fee}
-    Update Transaction
+    # Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
+    # Create Transaction     ${success_status_code}    ${success_status_message}
+    # Get Transaction        ${success_status_code}    ${success_status_message}    ${shipping_fee}
+    # Update Transaction     ${success_status_code}    ${success_status_message}    ${order_number}
 
 Get Product List
     [Arguments]    ${success_status_code}    ${success_status_message}
