@@ -1,0 +1,28 @@
+{
+    "products": [
+        {
+            "id": 123,
+            "product_name": "OMG-Grossip Girl",
+            "price": "xx.xx",
+            "image": ""
+        },
+        {
+            "id": 234,
+            "product_name": "",
+            "price": "xx.xx",
+            "image": ""
+        },
+        {
+            "id": 345,
+            "product_name": "",
+            "price": "xx.xx",
+            "image": ""
+        },
+        {
+            "id": 456,
+            "product_name": "",
+            "price": "xx.xx",
+            "image": ""
+        }
+    ]
+}
