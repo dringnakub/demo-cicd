@@ -1,7 +1,5 @@
 module.exports = (req, res, next) => {
 
-
-    console.log(req.path);
     if (req.path === '/api/v1/product/calculate') {
         res.jsonp({
             "status_code": "0",
@@ -17,6 +15,11 @@ module.exports = (req, res, next) => {
                 }
             ]
         });
-    } else { next(); }
+    } else if (req.path === '/api/v1/transaction' && req.method === 'POST') {
+        res.jsonp({
+            "transaction_id": "10011"
+        });
+    }
+    else { next(); }
 
 }
