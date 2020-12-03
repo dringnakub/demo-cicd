@@ -13,7 +13,7 @@ public class TransactionController {
     @PutMapping
     public ResponseEntity<TransactionResponse> getVisaDetail(@RequestHeader(name = "X-Correlation-Id", required = true) String correlationId,
                                                       @RequestBody VisaDetail request )throws Exception {
-        TransactionResponse response = new TransactionResponse();
+        TransactionResponse response = new TransactionResponse;
         ResponseEntity<TransactionResponse> responseEntity = ResponseEntity.status(HttpStatus.OK).body(response);
         return responseEntity;
     }
