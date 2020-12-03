@@ -1,30 +1,74 @@
 import React from 'react'
-import { Container, Button, Image } from 'react-bootstrap'
-import Route from 'next/router'
+import { Col, Row, Container, Button, Image } from 'react-bootstrap'
+import Route, { useRouter } from 'next/router'
 
+const PaymentSucess = () => {
+  const router = useRouter()
+  const { orderId, trackingId } = router.query
 
-export default class PaymentSucess extends React.Component {
-  constructor() {
-    super()
-    this.message = 'วันเวลาที่ชำระเงิน 1/3/2563 13:30:00 หมายเลขคำสั่งซื้อ 8004359103 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry ด้วยหมายเลข 1785261900'
+  const textStyle = {
+    textAlign: 'center'
   }
 
-  goHome() {
-    Route.push('/Product-list')
+  function onClickOkButton() {
+    Route.push('/')
   }
 
-  render() {
-    return (
-      <Container>
-        <div>
-          <h1 id="title">ชำระเงินสำเร็จ</h1>
+  return (
+    <Container>
+      <Row className="justify-content-md-center">
+        <Col>
+          <h1 id="thankyou" style={textStyle}>
+            {'Thankyou'}
+          </h1>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col style={textStyle}>
           <Image src="https://www.pngitem.com/pimgs/m/69-692608_transparent-answer-icon-png-check-pass-icon-png.png" width="8%" />
-          <div id="notify">
-            {this.message}
-          </div>
-          <Button id="goHome" onClick={() => this.goHome()}>กลับไปหน้าหลัก</Button>
-        </div>
-      </Container>
-    )
-  }
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col>
+          <p id="success" style={textStyle}>
+            {'Successfully'}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col>
+          <p id="order_id" style={textStyle}>
+            {`Order ID : ${orderId}`}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col>
+          <p id="tracking_id" style={textStyle}>
+            {`Tracking ID : ${trackingId}`}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col>
+          <p id="check_email" style={textStyle}>
+            {'Please check your email'}
+          </p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-md-center">
+        <Col sm={4}>
+          <Button block id="ok_button" onClick={onClickOkButton}>{'OK'}</Button>
+        </Col>
+      </Row>
+    </Container>
+  )
 }
+
+export default PaymentSucess
