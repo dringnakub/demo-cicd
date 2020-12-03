@@ -3,6 +3,8 @@ package com.happy.shoppingcart.common.entities;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,5 +23,5 @@ public class LoyaltyConfig {
     private int pointRate;
 
     @Column(name = "created_at")
-    private DateTime createAt;
+    private LocalDateTime createAt;
 }
