@@ -23,10 +23,20 @@
     
     backEnd/
         src/main/java/com/happy/shoppingcart/
-            product/
-            cart/
-            order/
-            transaction/
+            api/
+                controller/
+                    ProductController.java
+                    TransactionController.java
+                    domain/
+                        ProductRequest.java
+                        ProductResponse.java
+                        TransactionRequest.java
+                        TransactionResponse.java
+                service/
+                    ProductService.java
+                    TransactionService.java
             common/
                 service/
                     DatatimeService.java
+                repo/
+                entity/
