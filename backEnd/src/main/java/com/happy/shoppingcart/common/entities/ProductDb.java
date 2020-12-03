@@ -1,34 +1,42 @@
 package com.happy.shoppingcart.common.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "product_tb")
-public class Product {
-    
+@Table(name = "product_db")
+public class ProductDb {
     @Id
-    @Column(name = "product_id", nullable = false)
-    private Integer productId;
-    @Column(name = "product_name", nullable = false)
+    @Column(name = "product_id")
+    private int productId;
+
+    @Column(name = "product_name")
     private String productName;
-    @Column(name = "price", nullable = false)
-    private Double price;
-    @Column(name = "brand", nullable = false)
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    @Column(name = "brand")
     private String brand;
+
     @Column(name = "gender")
     private String gender;
+
     @Column(name = "age")
-    private Integer age;
+    private int age;
+
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
+
     @Column(name = "img")
     private String img;
 }
