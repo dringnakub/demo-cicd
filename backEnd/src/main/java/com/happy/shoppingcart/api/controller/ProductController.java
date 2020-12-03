@@ -17,4 +17,11 @@ public class ProductController {
         return ResponseEntity.ok().body("");
     }
 
+    @PostMapping("/api/v1/product/calculate")
+    public ProductResponse calculateAll() {
+        ProductResponse response = new ProductResponse();
+        response.setStatusCode(200);
+        return response;
+    }
+
 }
