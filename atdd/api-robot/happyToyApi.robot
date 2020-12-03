@@ -12,8 +12,8 @@ ${URL}                         http://localhost:8080
 &{ACCEPT}                      Accept=application/json
 &{POST_HEADERS}                &{ACCEPT}    &{CONTENT_TYPE}
 ${CALCULATE_POST}              {
-...                                 "shipping_id" : ${shipping_id},
-...                                 "cart_id" : ${cart_id}
+...                                 "shipping_id" : \${shipping_id},
+...                                 "cart_id" : \${cart_id}
 ...                             }
 ${CREATE_TRANSACTION}           {
 ...                                 "address1" : "123",
@@ -21,8 +21,8 @@ ${CREATE_TRANSACTION}           {
 ...                                 "post_code" : "10120",
 ...                                 "country" : "Thailand",
 ...                                 "mobile_number" : "0863873913",
-...                                 "shipping_id" : ${shipping_id},
-...                                 "cart_id" : ${cart_id}
+...                                 "shipping_id" : \${shipping_id},
+...                                 "cart_id" : \${cart_id}
 ...                             }
 ${PAYMENT_INFO}           {
 ...                                 "card_number" : "4555 3413 4907 7109",
@@ -55,8 +55,8 @@ Checkout Product
 ...                 ${order_number}
     Get Product List       ${success_status_code}    ${success_status_message}
     Add Product To Cart    ${success_status_code}    ${success_status_message}    ${product_id}    ${expected_price}
-    Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
-    Create Transaction     ${success_status_code}    ${success_status_message}
+    Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}    ${shipping_id}
+    Create Transaction     ${success_status_code}    ${success_status_message}    ${shipping_id}
     Get Transaction        ${success_status_code}    ${success_status_message}    ${shipping_fee}
     Update Transaction     ${success_status_code}    ${success_status_message}    ${order_number}
 
@@ -78,7 +78,7 @@ Add Product To Cart
     Set Test Variable    ${cart_id}    ${cart_id}
 
 Calculate Shipping
-    [Arguments]    ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
+    [Arguments]    ${success_status_code}    ${success_status_message}    ${expected_price_shipping}    ${shipping_id}
     ${message}=     Replace Variables    ${CALCULATE_POST}
     ${requestBody}=    To Json    ${message}
     ${calculatePriceShipping}=   Post Request    ${happy_toy_store}    /api/v1/product/calculate    json=${requestBody}    headers=&{ACCEPT}
@@ -89,7 +89,7 @@ Calculate Shipping
     Should Be Equal As Numbers       ${calculatePriceShipping.json()["total_with_ship"]}    ${expected_price_shipping}
 
 Create Transaction
-    [Arguments]    ${success_status_code}    ${success_status_message}
+    [Arguments]    ${success_status_code}    ${success_status_message}    ${shipping_id}
     ${message}=     Replace Variables    ${CREATE_TRANSACTION}
     ${requestBody}=    To Json    ${message}
     ${createTransaction}=   Post Request    ${happy_toy_store}    /api/v1/transaction    json=${requestBody}    headers=&{ACCEPT}
