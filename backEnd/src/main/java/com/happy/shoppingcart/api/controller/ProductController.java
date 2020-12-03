@@ -25,7 +25,7 @@ public class ProductController {
         return ResponseEntity.ok().body("");
     }
     
-    @GetMapping("/list")
+    @GetMapping("list")
     public ResponseEntity<ProductResponse> getProductList(
             @RequestParam(name = "age", required = false) Integer age,
             @RequestParam(name = "gender", required = false) String gender) {
