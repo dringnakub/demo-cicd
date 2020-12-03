@@ -44,28 +44,36 @@ Success Case    success_status_code=0
 
 
 *** Keywords ***
-Checkout Product
-    # Get Product List       ${success_status_code}    ${success_status_message}
+Checkout Product    
+    [Arguments]     ${success_status_code}    
+...                 ${success_status_message}    
+...                 ${product_id}    
+...                 ${expected_price}
+...                 ${expected_price_shipping}
+...                 ${shipping_id}
+...                 ${shipping_fee}
+...                 ${order_number}
+    Get Product List       ${success_status_code}    ${success_status_message}
     Add Product To Cart    ${success_status_code}    ${success_status_message}    ${product_id}    ${expected_price}
-    # Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
-    # Create Transaction     ${success_status_code}    ${success_status_message}
-    # Get Transaction        ${success_status_code}    ${success_status_message}    ${shipping_fee}
-    # Update Transaction     ${success_status_code}    ${success_status_message}    ${order_number}
+    Calculate Shipping     ${success_status_code}    ${success_status_message}    ${expected_price_shipping}
+    Create Transaction     ${success_status_code}    ${success_status_message}
+    Get Transaction        ${success_status_code}    ${success_status_message}    ${shipping_fee}
+    Update Transaction     ${success_status_code}    ${success_status_message}    ${order_number}
 
 Get Product List
     [Arguments]    ${success_status_code}    ${success_status_message}
-    ${productList}=   Get Request    ${happy_toy_store}    /api/v1/product/list    headers=&{ACCEPT}
+    ${productList}=   Get Request    ${happy_toy_store}    /api/v1/products/list    headers=&{ACCEPT}
     Status Should Be  200            ${productList}
     Should Be Equal As Strings       ${productList.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${productList.json()["status_message"]}    ${success_status_message}
+    Should Be Equal As Strings       ${productList.json()["message"]}    ${success_status_message}
 
 Add Product To Cart
     [Arguments]   ${success_status_code}    ${success_status_message}    ${product_id}    ${expected_price}
-    ${calculatePrice}=   Get Request    ${happy_toy_store}    /api/v1/product/add_cart?product_id=${product_id}    headers=&{ACCEPT}
+    ${calculatePrice}=   Get Request    ${happy_toy_store}    /api/v1/products/add_cart?product_id=${product_id}&cart_id=    headers=&{ACCEPT}
     Status Should Be  200            ${calculatePrice}
     Should Be Equal As Strings       ${calculatePrice.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${calculatePrice.json()["status_message"]}    ${success_status_message}
-    Should Be Equal                  ${calculatePrice.json()["total"]}    ${expected_price}
+    Should Be Equal As Strings       ${calculatePrice.json()["message"]}    ${success_status_message}
+    Should Be Equal As Numbers       ${calculatePrice.json()["total"]}    ${expected_price}
     ${cart_id}=    Get From Dictionary     ${calculatePrice.json()}    cart_id
     Set Test Variable    ${cart_id}    ${cart_id}
 
@@ -76,9 +84,9 @@ Calculate Shipping
     ${calculatePriceShipping}=   Post Request    ${happy_toy_store}    /api/v1/product/calculate    json=${requestBody}    headers=&{ACCEPT}
     Status Should Be    200    ${calculatePriceShipping}
     Should Be Equal As Strings       ${calculatePriceShipping.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${calculatePriceShipping.json()["status_message"]}    ${success_status_message}
-    Should Be Equal As Strings       ${calculatePriceShipping.json()["cart_id"]}    ${cart_id}
-    Should Be Equal                  ${calculatePriceShipping.json()["total_with_ship"]}    ${expected_price_shipping}
+    Should Be Equal As Strings       ${calculatePriceShipping.json()["message"]}    ${success_status_message}
+    Should Be Equal As Numbers       ${calculatePriceShipping.json()["cart_id"]}    ${cart_id}
+    Should Be Equal As Numbers       ${calculatePriceShipping.json()["total_with_ship"]}    ${expected_price_shipping}
 
 Create Transaction
     [Arguments]    ${success_status_code}    ${success_status_message}
@@ -87,7 +95,7 @@ Create Transaction
     ${createTransaction}=   Post Request    ${happy_toy_store}    /api/v1/transaction    json=${requestBody}    headers=&{ACCEPT}
     Status Should Be    200    ${createTransaction}
     Should Be Equal As Strings       ${createTransaction.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${createTransaction.json()["status_message"]}    ${success_status_message}
+    Should Be Equal As Strings       ${createTransaction.json()["message"]}    ${success_status_message}
     ${transaction_id}=    Get From Dictionary     ${createTransaction.json()}    transaction_id
     Set Test Variable    ${transaction_id}    ${transaction_id}
 
@@ -96,9 +104,9 @@ Get Transaction
     ${getTransaction}=   Get Request    ${happy_toy_store}    /api/v1/product/transaction?transaction_id=${transaction_id}    headers=&{ACCEPT}
     Status Should Be    200    ${getTransaction}
     Should Be Equal As Strings       ${getTransaction.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${getTransaction.json()["status_message"]}    ${success_status_message}
-    Should Be Equal                  ${getTransaction.json()["total"]}    ${expected_price_shipping}
-    Should Be Equal                  ${getTransaction.json()["shipping_fee"]}    ${shipping_fee}
+    Should Be Equal As Strings       ${getTransaction.json()["message"]}    ${success_status_message}
+    Should Be Equal As Numbers       ${getTransaction.json()["total"]}    ${expected_price_shipping}
+    Should Be Equal As Numbers       ${getTransaction.json()["shipping_fee"]}    ${shipping_fee}
 
 Update Transaction
     [Arguments]    ${success_status_code}    ${success_status_message}    ${order_number}
@@ -107,7 +115,7 @@ Update Transaction
     ${updateTransaction}=   Put Request    ${happy_toy_store}    /api/v1/transaction    json=${requestBody}    headers=&{ACCEPT}
     Status Should Be    200    ${updateTransaction}
     Should Be Equal As Strings       ${updateTransaction.json()["status_code"]}    ${success_status_code}
-    Should Be Equal As Strings       ${updateTransaction.json()["status_message"]}    ${success_status_message}
+    Should Be Equal As Strings       ${updateTransaction.json()["message"]}    ${success_status_message}
     Should Be Equal As Strings       ${updateTransaction.json()["order_no"]}    ${order_number}
 
 
