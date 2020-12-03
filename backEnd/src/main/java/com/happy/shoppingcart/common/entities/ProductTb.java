@@ -13,8 +13,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_db")
-public class ProductDb {
+@Table(name = "product_tb")
+public class ProductTb {
     @Id
     @Column(name = "product_id")
     private int productId;
