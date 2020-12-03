@@ -11,5 +11,12 @@ public class ProductResponse {
     @JsonProperty("status_code")
     private int statusCode;
     private String message;
-    private List<ProductResponsePayload> payload;
+    private Integer point;
+    @JsonProperty("total_with_ship")
+    private String totalWithShip;
+    @JsonProperty("shipping_name")
+    private String shippingName;
+    private List<ProductPayload> payload;
+    @JsonProperty("cart_id")
+    private String cartId;
 }

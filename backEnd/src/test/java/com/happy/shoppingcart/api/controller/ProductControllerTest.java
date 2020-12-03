@@ -1,7 +1,6 @@
 package com.happy.shoppingcart.api.controller;
 
 import com.happy.shoppingcart.api.controller.domain.ProductResponse;
-import com.happy.shoppingcart.api.controller.domain.ProductResponsePayload;
 import com.happy.shoppingcart.api.service.ProductService;
 import com.happy.shoppingcart.common.entities.ProductDb;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -44,7 +44,7 @@ class ProductControllerTest {
         ProductResponse body = response.getBody();
         assertEquals(200, body.getStatusCode());
         assertEquals("success", body.getMessage());
-        assertEquals(15, body.getPayload().get(0).getId());
+        assertEquals(15, body.getPayload().get(0).getProductId());
         assertEquals("OMG-Gossip Girl", body.getPayload().get(0).getProductName());
         assertEquals(24.95, body.getPayload().get(0).getPrice());
         assertEquals("/img/15-omg-gossip-girl.jpg", body.getPayload().get(0).getImage());

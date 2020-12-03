@@ -43,9 +43,9 @@ INSERT INTO `loyalty_config` (`row_id`, `point_rate`, `created_at`) VALUES
 CREATE TABLE `currency` (
   `row_id` varchar(45) NOT NULL,
   `exc_rate_date` datetime NOT NULL,
-  `exc_rate` decimal(10,0) NOT NULL,
+  `exc_rate` decimal(10,2) NOT NULL,
   `currency_code` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 INSERT INTO db.currency (row_id,exc_rate_date,exc_rate,currency_code) VALUES
-('uuid01','2020-12-03 00:00:00',35,'USD')
+('uuid01','2020-12-03 00:00:00',30.3,'USD')
 ;
