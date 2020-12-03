@@ -2,3 +2,4 @@
 */shopping-cart.iml
 target/
 atdd/api-test/data/node_modules
+my-db/
