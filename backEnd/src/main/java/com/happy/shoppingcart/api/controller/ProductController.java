@@ -36,13 +36,15 @@ public class ProductController {
 
         List<ProductDb> productDbList = productService.getProductList(age, gender);
         List<ProductPayload> responsePayloadList = new ArrayList<>();
-        for (ProductDb productDb : productDbList) {
-            ProductPayload productPayload = new ProductPayload();
-            productPayload.setProductId(productDb.getProductId());
-            productPayload.setProductName(productDb.getProductName());
-            productPayload.setPrice(productDb.getPrice() == null ? 0.0 : productDb.getPrice().doubleValue());
-            productPayload.setImage(productDb.getImg());
-            responsePayloadList.add(productPayload);
+        if (productDbList != null) {
+            for (ProductDb productDb : productDbList) {
+                ProductPayload productPayload = new ProductPayload();
+                productPayload.setProductId(productDb.getProductId());
+                productPayload.setProductName(productDb.getProductName());
+                productPayload.setPrice(productDb.getPrice() == null ? 0.0 : productDb.getPrice().doubleValue());
+                productPayload.setImage(productDb.getImg());
+                responsePayloadList.add(productPayload);
+            }
         }
         response.setPayload(responsePayloadList);
         return ResponseEntity.ok(response);
