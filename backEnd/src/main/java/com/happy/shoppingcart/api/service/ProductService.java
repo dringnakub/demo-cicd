@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 public class ProductService {
-    
+
     @Autowired
     private ShoppingCartRepo shoppingRepos;
     @Autowired
@@ -33,11 +33,22 @@ public class ProductService {
         return result.get();
     }
 
+    private ProductDb getProductListById(int productId) {
+        Optional<ProductDb> result = productDbRepos.findById(productId);
+        return result.get();
+    }
+
 //    public ProductResponse calculate(int shippingId, int cartId) {
 //        ProductResponse response = new ProductResponse();
 //        ShoppingCart dtCart = this.getCart(cartId);
 //        Shipping dtShipping = this.getShipping(shippingId);
-//        dtCart
+//        ProductDb dtProduct = this.getProductListById(dtCart.getProductId());
+//        Integer totalWithShipping = dtShipping.getShippingRate() + dtProduct.getPrice();
+//        response.setCartId(dtCart.getCartId());
+//        response.setMessage("Successfully");
+//        response.setPoint(dtProduct.getPrice());
+//        response.setTotalWithShip();
+//
 //        return
 //    }
 
@@ -54,4 +65,6 @@ public class ProductService {
         }
         return this.productDbRepos.findByGender(gender);
     }
+
+
 }
