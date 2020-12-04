@@ -12,7 +12,7 @@ function CardProduct({ data, onClickAddToCart }) {
             className="card-img"
           />
         </div>
-        <h5>{data.name}</h5>
+        <h5>{data.product_name}</h5>
         <p>{data.price}</p>
         <Button
           id={`add-product-${data.id}`}
