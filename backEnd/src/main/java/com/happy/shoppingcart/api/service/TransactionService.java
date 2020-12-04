@@ -29,7 +29,7 @@ public class TransactionService {
         Transaction res = result.get();
         TransactionGetResponse transactionGetResponse = new TransactionGetResponse(
                 res.getPoint(),
-                res.getTotal(),
+                res.getTotal().doubleValue(),
                 res.getShippingFee()
         );
         return transactionGetResponse;
