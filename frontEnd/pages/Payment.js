@@ -1,20 +1,25 @@
 import React from 'react'
-import { Container, Row, Button } from 'react-bootstrap'
+import { Container, Row, Button, Col, Form } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
-import Route from 'next/router'
+import Route, { Router, withRouter } from 'next/router'
 import checkPaymentMethod from '../ecommerce/payment'
 
 export default class Payment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      paymentType: '',
-      cardNumber: '',
-      expiredMonth: '',
-      expiredYear: '',
-      cvv: '',
-      cardName: '',
+      form: {
+        paymentType: '',
+        cardNumber: '',
+        expiredMonth: '',
+        expiredYear: '',
+        cvv: '',
+        cardName: '',
+      },
+      monthList: this.getMonthList(),
+      yearList: this.getYearList()
+
     }
     this.handleChangePaymentType = this.handleChangePaymentType.bind(this)
     this.handleChangeCardNumber = this.handleChangeCardNumber.bind(this)
@@ -24,6 +29,23 @@ export default class Payment extends React.Component {
     this.handleChangeCardName = this.handleChangeCardName.bind(this)
   }
 
+  getMonthList() {
+    let monthList = []
+    for (let index = 1; index < 13; index++) {
+      monthList.push(index)
+    }
+    return monthList
+  }
+
+  getYearList() {
+    let d = new Date();
+    let nowYear = new Date().getFullYear();
+    let yearList = []
+    for (let index = 0; index < 7; index++) {
+      yearList.push(nowYear + index)
+    }
+    return yearList
+  }
   confrimPayment() {
     const {
       paymentType, cardNumber, expiredMonth, expiredYear, cvv, cardName,
@@ -78,66 +100,125 @@ export default class Payment extends React.Component {
     this.setState({ cardName: event.target.value })
   }
 
-  payment() {
-    Route.push('/Payment-success')
+
+  submitForm(event) {
+    event.preventDefault()
+    console.log('submitForm!!')
+    Route.push({
+      pathname: '/thankyou',
+      query: { orderId: "OB3456", trackingId: "12345" },
+    })
   }
 
   render() {
-    const {
-      cardNumber, expiredMonth, expiredYear, cvv, cardName,
-    } = this.state
-    const order = Cookies.getJSON('order')
+
     return (
       <Container>
-        <Row>
-          <form onSubmit={this.confrimPayment}>
-            <div>
-              <input type="radio" value="credit" id="CreditCradPayment" checked="checked" defaultChecked onChange={this.handleChangePaymentType} />
-              Credit Crad
-              <input type="radio" value="debit" id="DebitCradType" disabled />
-              Debit Crad
-              <input type="radio" value="linePay" id="LinePayType" disabled />
-              Line Pay
-            </div>
-            <div>
-              <label htmlFor="cardNumber" id="labelCardNumber">
-                เลขบัตร:
-                <input type="text" id="cardNumber" onChange={this.handleChangeCardNumber} value={cardNumber} />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="expiredMonth" id="labelExpiredMonth">
-                วันหมดอายุ:
-                <input type="text" id="expiredMonth" onChange={this.handleChangeExpiredMonth} value={expiredMonth} />
-              </label>
-              /
-              <input type="text" id="expiredYear" onChange={this.handleChangeExpiredYear} value={expiredYear} />
-            </div>
-            <div>
-              <label htmlFor="cvv" id="labelCvv">
-                CVV:
-                <input type="text" id="cvv" onChange={this.handleChangeCVV} value={cvv} />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="cardName" id="labelCardName">
-                ชื่อ:
-                <input type="text" id="cardName" onChange={this.handleChangeCardName} value={cardName} />
-              </label>
-            </div>
-            <div>
-              <label htmlFor="totalPrice" id="labelTotalPrice">
-                ยอกชำระ:
-                <span id="totalPrice">
-                  {order ? order.total_price : ''}
-                  {' '}
-                  USD
-                </span>
-              </label>
-            </div>
-            <Button id="Payment" onClick={() => { this.payment() }}> ยืนยันการชำระเงิน</Button>
-          </form>
-        </Row>
+        <div>
+          <Row>
+            <h6>
+              Summary
+            </h6>
+          </Row>
+          <Row>
+            <Col><p>ค่าสินค้า</p></Col>
+            <Col id="totalProductPrice">
+              <p>
+                12.95 USD
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>
+                ค่าจัดส่ง
+              </p>
+            </Col>
+            <Col id="totalShippingCharge">
+              <p>
+                2.00 USD
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p>
+                รวมทั้งสิ้น
+              </p>
+            </Col>
+            <Col id="totalAmount">
+              <p>
+                14.95 USD
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Check
+                defaultChecked={true}
+                type="radio"
+                label="VISA Card"
+                id="visa-radio-button"
+              />
+            </Col>
+          </Row>
+          <Form className="w-100" onSubmit={this.submitForm}>
+            <Form.Group as={Row} controlId="visa-placeholder">
+              <Form.Label column lg={2}>
+                Name
+            </Form.Label>
+              <Col lg={6}>
+                <Form.Control type="text" value={this.state.cardName}
+                  onChange={e => this.setState({ form: { ...this.state.form, cardName: e.target.value } })}
+                />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="visa-number">
+              <Form.Label column lg={2}>
+                Card Number
+              </Form.Label>
+              <Col lg={6}>
+                <Form.Control type="text" value={this.state.cardNumber} onChange={e => this.setState({ form: { ...this.state.form, cardNumber: e.target.value } })} />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="visa-cvv">
+              <Form.Label column lg={2}>
+                CVV
+              </Form.Label>
+              <Col lg={6}>
+                <Form.Control type="text" value={this.state.cvv} onChange={e => this.setState({ form: { ...this.state.form, cvv: e.target.value } })} />
+              </Col>
+            </Form.Group>
+
+            <Form.Group as={Row} controlId="visa-expire">
+              <Form.Label column lg={2}>
+                EXP
+              </Form.Label>
+              <Col lg={2}>
+                <Form.Control as="select" custom>
+                  {this.state.monthList.map((itemMonth, index) => {
+                    return <option key={index}>{itemMonth}</option>
+                  })}
+
+                </Form.Control>
+              </Col>
+              <Col lg={2}>
+                <Form.Control as="select" custom>
+                  {this.state.yearList.map((itemYear, index) => {
+                    return <option key={index}>{itemYear}</option>
+                  })}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+            <Row>
+              <Col className="text-right">
+                <Button id="pay-button" type="submit">PAY</Button>
+              </Col>
+            </Row>
+          </Form>
+        </div>
       </Container>
     )
   }

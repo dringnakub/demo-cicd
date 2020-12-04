@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentSuccess should render correctly 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+    >
+      <h1
+        id="thankyou"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Thankyou
+      </h1>
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      <img
+        className=""
+        src="https://www.pngitem.com/pimgs/m/69-692608_transparent-answer-icon-png-check-pass-icon-png.png"
+        width="8%"
+      />
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+    >
+      <p
+        id="success"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Successfully
+      </p>
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+    >
+      <p
+        id="order_id"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Order ID : 123
+      </p>
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+    >
+      <p
+        id="tracking_id"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Tracking ID : 456
+      </p>
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col"
+    >
+      <p
+        id="check_email"
+        style={
+          Object {
+            "textAlign": "center",
+          }
+        }
+      >
+        Please check your email
+      </p>
+    </div>
+  </div>
+  <div
+    className="justify-content-md-center row"
+  >
+    <div
+      className="col-sm-4"
+    >
+      <button
+        className="btn btn-primary btn-block"
+        disabled={false}
+        id="ok_button"
+        onClick={[Function]}
+        type="button"
+      >
+        OK
+      </button>
+    </div>
+  </div>
+</div>
+`;
