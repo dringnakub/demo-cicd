@@ -10,6 +10,9 @@ import com.happy.shoppingcart.api.controller.domain.TransactionCreateResponse;
 import com.happy.shoppingcart.api.controller.domain.TransactionGetResponse;
 import com.happy.shoppingcart.api.controller.domain.TransactionRequest;
 import com.happy.shoppingcart.api.service.TransactionService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +44,10 @@ public class TransactionController {
         return responseEntity;
     }
 
-    @GetMapping
+   @GetMapping
     public ResponseEntity<TransactionGetResponse> getTransactionByID (@RequestParam("transaction_id") int id) {
         TransactionGetResponse response = transactionService.getTransactionById(id);
-        return  ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping
