@@ -1,9 +1,8 @@
 import React from 'react'
 import { Container, Row, Button, Col, Form } from 'react-bootstrap'
-import fetch from 'isomorphic-unfetch'
-import Cookies from 'js-cookie'
 import Route, { Router, withRouter } from 'next/router'
 import checkPaymentMethod from '../ecommerce/payment'
+import axios from 'axios'
 
 export default class Payment extends React.Component {
   constructor(props) {
@@ -17,16 +16,22 @@ export default class Payment extends React.Component {
         cvv: '',
         cardName: '',
       },
+      summary: {
+        point: '',
+        shipping_fee: '',
+        total: ''
+      },
       monthList: this.getMonthList(),
       yearList: this.getYearList()
 
     }
-    this.handleChangePaymentType = this.handleChangePaymentType.bind(this)
-    this.handleChangeCardNumber = this.handleChangeCardNumber.bind(this)
-    this.handleChangeExpiredMonth = this.handleChangeExpiredMonth.bind(this)
-    this.handleChangeExpiredYear = this.handleChangeExpiredYear.bind(this)
-    this.handleChangeCVV = this.handleChangeCVV.bind(this)
-    this.handleChangeCardName = this.handleChangeCardName.bind(this)
+  }
+
+  componentWillMount() {
+    axios.get("http://localhost:4000/transaction").then((result) => {
+      console.log(result)
+      this.setState({ summary: result.data })
+    })
   }
 
   getMonthList() {
@@ -45,59 +50,6 @@ export default class Payment extends React.Component {
       yearList.push(nowYear + index)
     }
     return yearList
-  }
-  confrimPayment() {
-    const {
-      paymentType, cardNumber, expiredMonth, expiredYear, cvv, cardName,
-    } = this.state
-    const cradType = checkPaymentMethod(cardNumber)
-    const order = Cookies.getJSON('order')
-    const totalPrice = order ? order.total_price : 0
-    const orderId = order ? order.order_id : 0
-
-    const request = {
-      payment_type: paymentType,
-      type: cradType,
-      card_number: cardNumber,
-      cvv,
-      expired_month: parseInt(expiredMonth, 2),
-      expired_year: parseInt(expiredYear, 2),
-      card_name: cardName,
-      total_price: totalPrice,
-      order_id: orderId,
-    }
-    fetch('/api/v1/confirmPayment', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...request,
-      }),
-    })
-      .then((r) => r.json())
-  }
-
-  handleChangePaymentType(event) {
-    this.setState({ paymentType: event.target.value })
-  }
-
-  handleChangeCardNumber(event) {
-    this.setState({ cardNumber: event.target.value })
-  }
-
-  handleChangeExpiredMonth(event) {
-    this.setState({ expiredMonth: event.target.value })
-  }
-
-  handleChangeExpiredYear(event) {
-    this.setState({ expiredYear: event.target.value })
-  }
-
-  handleChangeCVV(event) {
-    this.setState({ cvv: event.target.value })
-  }
-
-  handleChangeCardName(event) {
-    this.setState({ cardName: event.target.value })
   }
 
 
@@ -122,17 +74,17 @@ export default class Payment extends React.Component {
           </Row>
           <Row>
             <Col>POINT</Col>
-            <Col id="point_amount">12</Col>
+            <Col id="point_amount">{this.state.summary.point}</Col>
             <Col>Point</Col>
           </Row>
           <Row>
             <Col>ค่าจัดส่ง</Col>
-            <Col id="shipping_amount">40</Col>
+            <Col id="shipping_amount">{this.state.summary.shipping_fee}</Col>
             <Col>บาท</Col>
           </Row>
           <Row>
             <Col>รวมทั้งสิ้น</Col>
-            <Col id="total_amount">795.985</Col>
+            <Col id="total_amount">{this.state.summary.total}</Col>
             <Col>บาท</Col>
           </Row>
           <hr className="w-100" />
@@ -179,14 +131,14 @@ export default class Payment extends React.Component {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} controlId="visa-expire">
+            <Form.Group as={Row} >
               <Form.Label column lg={3}>
                 EXP
               </Form.Label>
               <Col lg={2}>
                 <Form.Control as="select" custom id="visa-expire-month">
                   {this.state.monthList.map((itemMonth, index) => {
-                    return <option key={index}>{itemMonth}</option>
+                    return <option key={index} id={index} value={itemMonth}>{itemMonth}</option>
                   })}
 
                 </Form.Control>
@@ -194,7 +146,7 @@ export default class Payment extends React.Component {
               <Col lg={2}>
                 <Form.Control as="select" custom id="visa-expire-year">
                   {this.state.yearList.map((itemYear, index) => {
-                    return <option key={index}>{itemYear}</option>
+                    return <option key={index} id={index} value={itemYear}>{itemYear}</option>
                   })}
                 </Form.Control>
               </Col>
