@@ -12,7 +12,7 @@ export default class Home extends React.Component {
   };
 
   onClickCheckout() {
-    Route.push(`/order?order_id=${this.state.cart.cart_id}`);
+    Route.push(`/order?cart_id=${this.state.cart.cart_id}`);
   }
 
   addCart(product) {
