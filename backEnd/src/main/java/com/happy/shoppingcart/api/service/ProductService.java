@@ -1,8 +1,12 @@
 package com.happy.shoppingcart.api.service;
 
+import com.happy.shoppingcart.api.controller.domain.ProductPayload;
+import com.happy.shoppingcart.api.controller.domain.ProductResponse;
+import com.happy.shoppingcart.common.entities.LoyaltyConfig;
 import com.happy.shoppingcart.common.entities.ProductTb;
 import com.happy.shoppingcart.common.entities.Shipping;
 import com.happy.shoppingcart.common.entities.ShoppingCart;
+import com.happy.shoppingcart.common.repo.LoyaltyConfigRepo;
 import com.happy.shoppingcart.common.repo.ProductTbRepo;
 import com.happy.shoppingcart.common.repo.ShippingRepo;
 import com.happy.shoppingcart.common.repo.ShoppingCartRepo;
@@ -10,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +28,8 @@ public class ProductService {
     private ShippingRepo shippingRepos;
     @Autowired
     private ProductTbRepo productTbRepos;
+    @Autowired
+    private LoyaltyConfigRepo loyaltyConfigRepo;
 
     private ShoppingCart getCart(int id) {
         Optional<ShoppingCart> result = shoppingRepos.findById(id);
@@ -38,19 +46,32 @@ public class ProductService {
         return result.get();
     }
 
-//    public ProductResponse calculate(int shippingId, int cartId) {
-//        ProductResponse response = new ProductResponse();
-//        ShoppingCart dtCart = this.getCart(cartId);
-//        Shipping dtShipping = this.getShipping(shippingId);
-//        ProductTb dtProduct = this.getProductListById(dtCart.getProductId());
-//        Integer totalWithShipping = dtShipping.getShippingRate() + dtProduct.getPrice();
-//        response.setCartId(dtCart.getCartId());
-//        response.setMessage("Successfully");
-//        response.setPoint(dtProduct.getPrice());
-//        response.setTotalWithShip();
-//
-//        return
-//    }
+    private LoyaltyConfig getLoyalty(int id) {
+        Optional<LoyaltyConfig> result = loyaltyConfigRepo.findById(id);
+        return result.get();
+    }
+
+    public ProductResponse calculate(int shippingId, int cartId) {
+        ProductResponse response = new ProductResponse();
+        ProductPayload payLoad = new ProductPayload();
+        ShoppingCart dtCart = this.getCart(cartId);
+        Shipping dtShipping = this.getShipping(shippingId);
+        ProductTb dtProduct = this.getProductListById(dtCart.getProductId());
+        LoyaltyConfig dtLoyalty = this.getLoyalty(1);
+        BigDecimal pointTotal = dtProduct.getPrice().divide(BigDecimal.valueOf(dtLoyalty.getPointRate()));
+        BigDecimal totalWithShipping = dtProduct.getPrice().add(dtShipping.getShippingRate());
+        payLoad.setProductId(dtProduct.getProductId());
+        payLoad.setProductName(dtProduct.getProductName());
+        payLoad.setPrice(dtProduct.getPrice());
+
+        response.setStatusCode(200);
+        response.setCartId(dtCart.getCartId());
+        response.setMessage("Successfully");
+        response.setPoint(pointTotal.intValue());
+        response.setTotalWithShip(totalWithShipping);
+        response.setPayload(Arrays.asList(payLoad));
+        return response;
+    }
 
     public List<ProductTb> getProductList(@Nullable Integer age, @Nullable String gender) {
 

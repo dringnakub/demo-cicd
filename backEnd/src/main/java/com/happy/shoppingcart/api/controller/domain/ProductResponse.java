@@ -12,7 +12,7 @@ public class ProductResponse {
     @JsonProperty("status_code")
     private int statusCode;
     private String message;
-    private BigDecimal point;
+    private Integer point;
     @JsonProperty("total_with_ship")
     private BigDecimal totalWithShip;
     @JsonProperty("shipping_name")

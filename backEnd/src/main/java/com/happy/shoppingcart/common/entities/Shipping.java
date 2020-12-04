@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class Shipping {
     private int shippingId;
 
     @Column(name = "shipping_rate")
-    private int shippingRate;
+    private BigDecimal shippingRate;
 
     @Column(name = "shipping_name")
     private int shippingName;
