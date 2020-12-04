@@ -36,13 +36,13 @@ pipeline {
 
     stage('run UI test') {
       steps {
-        sh 'robot atdd/robot-ui/happyToy.robot'
+        sh 'cd atdd/robot-ui/ && robot happyToy.robot'
       }
     }
 
     stage('run API test') {
       steps {
-        sh 'robot atdd/api-robot/happyToyApi.robot'
+        sh 'cd atdd/api-robot/ && robot happyToyApi.robot'
       }
     }
 
