@@ -84,6 +84,12 @@ public class TransactionService {
         return transactionRepo.save(transaction).getTransactionId();
     }
 
+    public BigDecimal getTotalFromTransaction(int tnxId){
+        Transaction transaction = transactionRepo.getOne(tnxId);
+        BigDecimal total = transaction.getTotal();
+        return total;
+    }
+
     public void updateTransaction(int tnxId){
         Transaction transaction = transactionRepo.getOne(tnxId);
         transaction.setStatus("success");

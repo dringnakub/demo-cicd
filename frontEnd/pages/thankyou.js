@@ -40,16 +40,18 @@ const PaymentSucess = () => {
 
       <Row className="justify-content-md-center">
         <Col>
-          <p id="order_id" style={textStyle}>
-            {`Order ID : ${orderId}`}
+          <p style={textStyle}>
+            {'Order ID : '}
+            <span id="order_id">{orderId}</span>
           </p>
         </Col>
       </Row>
 
       <Row className="justify-content-md-center">
         <Col>
-          <p id="tracking_id" style={textStyle}>
-            {`Tracking ID : ${trackingId}`}
+          <p style={textStyle}>
+            {'Tracking ID : '}
+            <span id="tracking_id">{trackingId}</span>
           </p>
         </Col>
       </Row>

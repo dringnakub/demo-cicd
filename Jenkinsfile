@@ -50,6 +50,8 @@ pipeline {
   post {
       always {
           junit 'backEnd/**/target/surefire-reports/TEST-*.xml'
+          robot outputPath: 'atdd/robot-ui/', passThreshold: 100.0
+          robot outputPath: 'atdd/api-robot/', passThreshold: 100.0
           sh 'docker-compose down -v'
       }
   }

@@ -11,7 +11,8 @@ module.exports = (req, res, next) => {
                 {
                     "id": 123,
                     "product_name": "OMG-Grossip Girl",
-                    "price": 755.985
+                    "price": 755.985,
+                    "image": "https://cf.shopee.co.th/file/b0212ad002b15496391cd08a359c70bf"
                 }
             ]
         });
