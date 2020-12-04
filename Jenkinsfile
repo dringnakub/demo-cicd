@@ -37,14 +37,12 @@ pipeline {
     stage('run UI test') {
       steps {
         sh 'robot atdd/robot-ui/happyToy.robot'
-        robot outputPath: 'atdd/robot-ui/', passThreshold: 100.0
       }
     }
 
     stage('run API test') {
       steps {
         sh 'robot atdd/api-robot/happyToyApi.robot'
-        robot outputPath: 'atdd/api-robot/', passThreshold: 100.0
       }
     }
 
@@ -52,6 +50,8 @@ pipeline {
   post {
       always {
           junit 'backEnd/**/target/surefire-reports/TEST-*.xml'
+          robot outputPath: 'atdd/robot-ui/', passThreshold: 100.0
+          robot outputPath: 'atdd/api-robot/', passThreshold: 100.0
           sh 'docker-compose down -v'
       }
   }
