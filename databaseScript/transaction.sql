@@ -28,7 +28,7 @@ CREATE TABLE `transaction` (
   `mobile_number` varchar(10) NOT NULL,
   `shipping_id` int NOT NULL,
   `cart_id` int NOT NULL,
-  `total` int NOT NULL,
+  `total` decimal(10,2) NULL,
   `point` int NOT NULL,
   `shipping_fee` int NOT NULL,
   `date_time` datetime DEFAULT NULL,
