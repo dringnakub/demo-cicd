@@ -121,37 +121,24 @@ export default class Payment extends React.Component {
             </h6>
           </Row>
           <Row>
-            <Col><p>ค่าสินค้า</p></Col>
-            <Col id="totalProductPrice">
-              <p>
-                12.95 USD
-              </p>
-            </Col>
+            <Col>POINT</Col>
+            <Col id="point_amount">12</Col>
+            <Col>Point</Col>
           </Row>
           <Row>
-            <Col>
-              <p>
-                ค่าจัดส่ง
-              </p>
-            </Col>
-            <Col id="totalShippingCharge">
-              <p>
-                2.00 USD
-              </p>
-            </Col>
+            <Col>ค่าจัดส่ง</Col>
+            <Col id="shipping_amount">40</Col>
+            <Col>บาท</Col>
           </Row>
           <Row>
-            <Col>
-              <p>
-                รวมทั้งสิ้น
-              </p>
-            </Col>
-            <Col id="totalAmount">
-              <p>
-                14.95 USD
-              </p>
-            </Col>
+            <Col>รวมทั้งสิ้น</Col>
+            <Col id="total_amount">795.985</Col>
+            <Col>บาท</Col>
           </Row>
+          <hr className="w-100" />
+          <h6>
+            Payment Method
+          </h6>
           <Row>
             <Col>
               <Form.Check
@@ -164,7 +151,7 @@ export default class Payment extends React.Component {
           </Row>
           <Form className="w-100" onSubmit={this.submitForm}>
             <Form.Group as={Row} controlId="visa-placeholder">
-              <Form.Label column lg={2}>
+              <Form.Label column lg={3}>
                 Name
             </Form.Label>
               <Col lg={6}>
@@ -175,7 +162,7 @@ export default class Payment extends React.Component {
             </Form.Group>
 
             <Form.Group as={Row} controlId="visa-number">
-              <Form.Label column lg={2}>
+              <Form.Label column lg={3}>
                 Card Number
               </Form.Label>
               <Col lg={6}>
@@ -184,7 +171,7 @@ export default class Payment extends React.Component {
             </Form.Group>
 
             <Form.Group as={Row} controlId="visa-cvv">
-              <Form.Label column lg={2}>
+              <Form.Label column lg={3}>
                 CVV
               </Form.Label>
               <Col lg={6}>
@@ -193,11 +180,11 @@ export default class Payment extends React.Component {
             </Form.Group>
 
             <Form.Group as={Row} controlId="visa-expire">
-              <Form.Label column lg={2}>
+              <Form.Label column lg={3}>
                 EXP
               </Form.Label>
               <Col lg={2}>
-                <Form.Control as="select" custom>
+                <Form.Control as="select" custom id="visa-expire-month">
                   {this.state.monthList.map((itemMonth, index) => {
                     return <option key={index}>{itemMonth}</option>
                   })}
@@ -205,7 +192,7 @@ export default class Payment extends React.Component {
                 </Form.Control>
               </Col>
               <Col lg={2}>
-                <Form.Control as="select" custom>
+                <Form.Control as="select" custom id="visa-expire-year">
                   {this.state.yearList.map((itemYear, index) => {
                     return <option key={index}>{itemYear}</option>
                   })}
