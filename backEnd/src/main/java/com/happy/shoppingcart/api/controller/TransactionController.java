@@ -31,8 +31,8 @@ public class TransactionController {
         BigDecimal total = transactionService.getTotalFromTransaction(request.getTransactionId());
         String visaApprove = visaService.verifyVisa(request,total);
         //call sentToKerry
-
-        TransactionResponse response = new TransactionResponse("12345","123456");
+        String trackingNumber = transactionService.createTrackingNumber(request);
+        TransactionResponse response = new TransactionResponse("12345", trackingNumber);
         //update transaction
         transactionService.updateTransaction(request.getTransactionId());
         //update product quantity

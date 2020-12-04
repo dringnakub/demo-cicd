@@ -36,6 +36,8 @@ public class Transaction {
     private BigDecimal total;
     @Column(name = "point")
     private int point;
+    @Column(name = "post_code")
+    private String postCode;
     @Column(name = "shipping_fee")
     private int shippingFee;
     @Column(name = "date_time")
