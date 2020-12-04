@@ -37,12 +37,14 @@ pipeline {
     stage('run UI test') {
       steps {
         sh 'robot atdd/robot-ui/happyToy.robot'
+        robot outputPath: 'atdd/robot-ui/', passThreshold: 100.0
       }
     }
 
     stage('run API test') {
       steps {
         sh 'robot atdd/api-robot/happyToyApi.robot'
+        robot outputPath: 'atdd/api-robot/', passThreshold: 100.0
       }
     }
 
