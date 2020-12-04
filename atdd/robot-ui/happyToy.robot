@@ -7,7 +7,7 @@ Library    SeleniumLibrary
     คำนวณราคาสินค้า    totalPrice=1324    totalPoint=1324
     เลือกการจัดส่ง    shippingId=123    shippingType=Kerry
     คำนวณค่าจัดส่งสินค้า    shippingPrice=40    total=795.985
-    ระบุที่อยู่ในการจัดส่งที่    address1=123    address2=Ratchdapisek R. Dindang Bankok    postcode=10120    country=Thailand    mobile=0864567891
+    ระบุที่อยู่ในการจัดส่ง    address1=123    address2=Ratchdapisek R. Dindang Bankok    postcode=10120    country=Thailand    tel=0864567891
     คำนวณแต้ม    point=7    
     เลือกช่องทางการชำระเงินเป็น    channel=Visa
     ระบุข้อมูลบัตรเครดิต    cardNumber=4555 3413 4907 7109    expiredMonth=03/27    name=Nareenart    cvv=372
@@ -31,16 +31,17 @@ Library    SeleniumLibrary
     Wait Until Element Is Visible    locator=shipping-item-${shippingId}
     Click Button    locator=shipping-item-${shippingId}
 คำนวณค่าจัดส่งสินค้า
-    [Arguments]    ${total}
-    Wait Until Element Is Visible    KERRY_LABEL    text=${shippingPrice}
+    [Arguments]    ${shippingPrice}    ${total}
+    Wait Until Element Contains    shipping_amount    text=${shippingPrice}
+    Wait Until Element Contains    total_amount    text=${total}
 ระบุที่อยู่ในการจัดส่ง
-    [Arguments]    ${cartId}
-    Input Text    locator=address1    text=123
-    Input Text    locator=address2    text=Ratchdapisek R. Dindang Bankok 
-    Input Text    locator=postcode    text=10120
-    Input Text    locator=country    text=Thailand
-    Input Text    locator=mobile    text=0864567891
-    Click Button    locator=SUBMIT_SHIPPING_BUTTON
+    [Arguments]    ${address1}    ${address2}    ${postcode}    ${country}    ${tel}
+    Input Text    locator=ADDR1_TEXTBOX    text=${address1}
+    Input Text    locator=ADDR2_TEXTBOX    text=${address2}
+    Input Text    locator=POST_TEXTBOX    text=${postcode}
+    Input Text    locator=COUNTRY_TEXTBOX    text=${country}
+    Input Text    locator=TEL_TEXBOX    text=${tel}
+    Click Button    locator=submit-shipping-button
 เลือกช่องทางการชำระเงิน
     [Arguments]    ${channel}
     Wait Until Element Is Visible    KERRY_LABEL    text=${channel}
