@@ -4,25 +4,25 @@
       "id": 123,
       "product_name": "OMG-Grossip Girl",
       "price": "xx.xx",
-      "image": ""
+      "image": "https://cf.shopee.co.th/file/b0212ad002b15496391cd08a359c70bf"
     },
     {
       "id": 234,
       "product_name": "",
       "price": "xx.xx",
-      "image": ""
+      "image": "https://cf.shopee.co.th/file/b3fe2031c90b2760e7732fbe6b587da7"
     },
     {
       "id": 345,
       "product_name": "",
       "price": "xx.xx",
-      "image": ""
+      "image": "https://cf.shopee.co.th/file/e2e224f208aaa1caaab57c5a2ff0ed3d"
     },
     {
       "id": 456,
       "product_name": "",
       "price": "xx.xx",
-      "image": ""
+      "image": "https://cf.shopee.co.th/file/1efac2005ad9dee4f54d9a238e04c354"
     }
   ],
   "products_add_cart": {

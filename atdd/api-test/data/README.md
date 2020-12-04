@@ -7,7 +7,11 @@
 
 # Start JSON Server
 
-```json-server --watch products.json --routes routes.json --middlewares hello.js```
+### Change Diretory
+cd atdd/api-test/data
+
+### Command Start
+```json-server --watch products.json --routes routes.json --middlewares hello.js -p 4000```
 
 
 
