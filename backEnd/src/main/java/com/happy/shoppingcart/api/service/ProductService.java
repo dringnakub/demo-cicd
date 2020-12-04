@@ -2,14 +2,8 @@ package com.happy.shoppingcart.api.service;
 
 import com.happy.shoppingcart.api.controller.domain.ProductPayload;
 import com.happy.shoppingcart.api.controller.domain.ProductResponse;
-import com.happy.shoppingcart.common.entities.LoyaltyConfig;
-import com.happy.shoppingcart.common.entities.ProductTb;
-import com.happy.shoppingcart.common.entities.Shipping;
-import com.happy.shoppingcart.common.entities.ShoppingCart;
-import com.happy.shoppingcart.common.repo.LoyaltyConfigRepo;
-import com.happy.shoppingcart.common.repo.ProductTbRepo;
-import com.happy.shoppingcart.common.repo.ShippingRepo;
-import com.happy.shoppingcart.common.repo.ShoppingCartRepo;
+import com.happy.shoppingcart.common.entities.*;
+import com.happy.shoppingcart.common.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -30,6 +24,8 @@ public class ProductService {
     private ProductTbRepo productTbRepos;
     @Autowired
     private LoyaltyConfigRepo loyaltyConfigRepo;
+    @Autowired
+    private CurrencyRepo currencyRepo;
 
     private ShoppingCart getCart(int id) {
         Optional<ShoppingCart> result = shoppingRepos.findById(id);
@@ -51,6 +47,11 @@ public class ProductService {
         return result.get();
     }
 
+    private Currency getCurrency(String currencyCode) {
+        Currency result = currencyRepo.findByCurrencyCode(currencyCode);
+        return result;
+    }
+
     public ProductResponse calculateAll(int shippingId, int cartId) {
         ProductResponse response = new ProductResponse();
         ProductPayload payLoad = new ProductPayload();
@@ -58,11 +59,13 @@ public class ProductService {
         Shipping dtShipping = this.getShipping(shippingId);
         ProductTb dtProduct = this.getProductListById(dtCart.getProductId());
         LoyaltyConfig dtLoyalty = this.getLoyalty(1);
-        BigDecimal pointTotal = dtProduct.getPrice().divide(BigDecimal.valueOf(dtLoyalty.getPointRate()));
-        BigDecimal totalWithShipping = dtProduct.getPrice().add(dtShipping.getShippingRate());
+        Currency currencyTHB = this.getCurrency("USB");
+        BigDecimal thbPrice = dtProduct.getPrice().multiply(currencyTHB.getExcRate());
+        BigDecimal pointTotal = thbPrice.divide(BigDecimal.valueOf(dtLoyalty.getPointRate()));
+        BigDecimal totalWithShipping = thbPrice.add(dtShipping.getShippingRate());
         payLoad.setProductId(dtProduct.getProductId());
         payLoad.setProductName(dtProduct.getProductName());
-        payLoad.setPrice(dtProduct.getPrice().doubleValue());
+        payLoad.setPrice(thbPrice.doubleValue());
 
         response.setCartId(dtCart.getCartId());
         response.setPoint(pointTotal);
