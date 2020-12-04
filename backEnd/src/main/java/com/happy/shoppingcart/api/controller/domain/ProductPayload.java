@@ -11,6 +11,6 @@ public class ProductPayload {
     private Integer productId;
     @JsonProperty("product_name")
     private String productName;
-    private BigDecimal price;
+    private Double price;
     private String image;
 }
