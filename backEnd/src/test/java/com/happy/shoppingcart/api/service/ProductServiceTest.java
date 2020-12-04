@@ -1,12 +1,8 @@
 package com.happy.shoppingcart.api.service;
 
 import com.happy.shoppingcart.api.controller.domain.ProductResponse;
-import com.happy.shoppingcart.common.entities.LoyaltyConfig;
-import com.happy.shoppingcart.common.entities.ProductTb;
-import com.happy.shoppingcart.common.entities.Shipping;
-import com.happy.shoppingcart.common.entities.ShoppingCart;
-import com.happy.shoppingcart.common.repo.ProductTbRepo;
-import com.happy.shoppingcart.common.repo.ShoppingCartRepo;
+import com.happy.shoppingcart.common.entities.*;
+import com.happy.shoppingcart.common.repo.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,31 +20,37 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
-    
+
     @InjectMocks
     private ProductService unitUnderTest;
     @Mock
     private ProductTbRepo ProductTbRepos;
     @Mock
     private ShoppingCartRepo shoppingRepos;
+    @Mock
+    private ShippingRepo shippingRepo;
+    @Mock
+    private LoyaltyConfigRepo loyaltyConfigRepo;
+    @Mock
+    private CurrencyRepo currencyRepo;
 
     @Test
     void getProductListWhenInputAgeAndGenderIsNull_resultIsReturnedByFindAll() {
-        
+
         List<ProductTb> ProductTbList = new ArrayList<>();
         ProductTb ProductTb = new ProductTb();
         ProductTb.setProductId(15);
         ProductTb.setProductName("OMG-Gossip Girl");
         ProductTbList.add(ProductTb);
         given(ProductTbRepos.findAll()).willReturn(ProductTbList);
-        
+
         List<ProductTb> resultList = this.unitUnderTest.getProductList(null, null);
-        
+
         assertEquals(1, resultList.size());
         assertEquals(15, resultList.get(0).getProductId());
         assertEquals("OMG-Gossip Girl", resultList.get(0).getProductName());
     }
-    
+
     @Test
     void getProductListWhenInputOnlyAge_resultIsReturnedByFindByAge() {
 
@@ -107,6 +109,7 @@ class ProductServiceTest {
         Shipping shipping = new Shipping();
         ProductTb productTb = new ProductTb();
         LoyaltyConfig loyalty = new LoyaltyConfig();
+        Currency currency = new Currency();
 
         productTb.setProductId(15);
         productTb.setProductName("OMG-Gossip Girl");
@@ -118,17 +121,22 @@ class ProductServiceTest {
         shipping.setShippingRate(BigDecimal.valueOf(40));
         loyalty.setRowId(1);
         loyalty.setPointRate(100);
+        currency.setCurrencyCode("USB");
+        currency.setExcRate(BigDecimal.valueOf(30.30));
 
-//        given(shoppingRepos.findById(1)).willReturn(Optional.of(shoppingCart));
+        given(ProductTbRepos.findById(15)).willReturn(Optional.of(productTb));
+        given(shoppingRepos.findById(1)).willReturn(Optional.of(shoppingCart));
+        given(shippingRepo.findById(1)).willReturn(Optional.of(shipping));
+        given(loyaltyConfigRepo.findById(1)).willReturn(Optional.of(loyalty));
+        given(currencyRepo.findByCurrencyCode("USB")).willReturn(currency);
+
 
         ProductResponse result = this.unitUnderTest.calculateAll(1, 1);
 
         assertEquals(1, result.getCartId());
-//        assertEquals();
-//
-//
-//        assertEquals(1, result.size());
-//        assertEquals(15, resultList.get(0).getProductId());
-//        assertEquals("OMG-Gossip Girl", resultList.get(0).getProductName());
+        assertEquals(BigDecimal.valueOf(7), result.getPoint());
+        assertEquals(BigDecimal.valueOf(795.985), result.getTotalWithShip());
+        assertEquals(15, result.getPayload().get(0).getProductId());
+        assertEquals("OMG-Gossip Girl", result.getPayload().get(0).getProductName());
     }
 }

@@ -42,7 +42,7 @@ class ProductControllerTest {
         ResponseEntity<ProductResponse> response = unitUnderTest.getProductList(15, "M");
 
         ProductResponse body = response.getBody();
-        assertEquals(200, body.getStatusCode());
+        assertEquals(0, body.getStatusCode());
         assertEquals("success", body.getMessage());
         assertEquals(15, body.getPayload().get(0).getProductId());
         assertEquals("OMG-Gossip Girl", body.getPayload().get(0).getProductName());
@@ -58,7 +58,7 @@ class ProductControllerTest {
 
         ResponseEntity<ProductResponse> response = unitUnderTest.getProductList(15, "M");
         ProductResponse body = response.getBody();
-        assertEquals(200, body.getStatusCode());
+        assertEquals(0, body.getStatusCode());
         assertEquals("success", body.getMessage());
         assertTrue(body.getPayload().isEmpty());
     }

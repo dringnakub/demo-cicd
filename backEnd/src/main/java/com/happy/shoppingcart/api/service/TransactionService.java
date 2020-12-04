@@ -26,7 +26,7 @@ public class TransactionService {
 
     public TransactionGetResponse getTransactionById(int id) {
         Optional<Transaction> result = transactionRepo.findById(id);
-        var res = result.get();
+        Transaction res = result.get();
         TransactionGetResponse transactionGetResponse = new TransactionGetResponse(
                 res.getPoint(),
                 res.getTotal(),

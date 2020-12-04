@@ -39,7 +39,7 @@ public class ProductController {
             @RequestParam(name = "gender", required = false) String gender) {
 
         ProductResponse response = new ProductResponse();
-        response.setStatusCode(200);
+        response.setStatusCode(0);
         response.setMessage("success");
 
         List<ProductTb> ProductTbList = productService.getProductList(age, gender);

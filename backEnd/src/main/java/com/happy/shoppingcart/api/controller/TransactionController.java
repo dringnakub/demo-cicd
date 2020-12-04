@@ -40,7 +40,7 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<TransactionGetResponse> getTransactionByID (@RequestParam("transaction_id") int id) {
-        var response = transactionService.getTransactionById(id);
+        TransactionGetResponse response = transactionService.getTransactionById(id);
         return  ResponseEntity.ok().body(response);
     }
 
