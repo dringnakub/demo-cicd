@@ -21,6 +21,31 @@ pipeline {
         }
       }
     }
+
+    stage('run build backend') {
+      steps {
+        sh 'mvn clean package'
+      }
+    }
+
+    stage('setup test fixtures') {
+      steps {
+        sh 'docker-compose up --build -d'
+      }
+    }
+
+    stage('run UI test') {
+      steps {
+        sh 'robot atdd/robot-ui/happyToy.robot'
+      }
+    }
+
+    stage('run API test') {
+      steps {
+        sh 'robot atdd/api-robot/happyToyApi.robot'
+      }
+    }
+
   }
   post {
       always {
