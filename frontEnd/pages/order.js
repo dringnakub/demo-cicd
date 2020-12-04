@@ -123,6 +123,7 @@ export default class ConfirmOrder extends React.Component {
               defaultChecked={true}
               type="radio"
               label="Kerry"
+              id="shipping-item-123"
             />
           </Col>
         </Row>
@@ -196,21 +197,24 @@ export default class ConfirmOrder extends React.Component {
             <Col>
               <Row>
                 <Col>POINT</Col>
-                <Col id="point_amount">12 point</Col>
+                <Col id="point_amount">12</Col>
+                <Col>Point</Col>
               </Row>
               <Row>
                 <Col>ค่าจัดส่ง</Col>
-                <Col id="shipping_amount">2.00 USD</Col>
+                <Col id="shipping_amount">40</Col>
+                <Col>บาท</Col>
               </Row>
               <Row>
                 <Col>รวมทั้งสิ้น</Col>
-                <Col id="total_amount">14.95 USD</Col>
+                <Col id="total_amount">795.985</Col>
+                <Col>บาท</Col>
               </Row>
             </Col>
           </Row>
           <Row>
             <Col className="text-right">
-              <Button id="confirmPayment" type="submit">Next</Button>
+              <Button id="submit-shipping-button" type="submit">Next</Button>
             </Col>
           </Row>
         </Form>
