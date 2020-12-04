@@ -1,28 +1,51 @@
 {
-    "products": [
-        {
-            "id": 123,
-            "product_name": "OMG-Grossip Girl",
-            "price": "xx.xx",
-            "image": ""
-        },
-        {
-            "id": 234,
-            "product_name": "",
-            "price": "xx.xx",
-            "image": ""
-        },
-        {
-            "id": 345,
-            "product_name": "",
-            "price": "xx.xx",
-            "image": ""
-        },
-        {
-            "id": 456,
-            "product_name": "",
-            "price": "xx.xx",
-            "image": ""
-        }
+  "products": [
+    {
+      "id": 123,
+      "product_name": "OMG-Grossip Girl",
+      "price": "xx.xx",
+      "image": ""
+    },
+    {
+      "id": 234,
+      "product_name": "",
+      "price": "xx.xx",
+      "image": ""
+    },
+    {
+      "id": 345,
+      "product_name": "",
+      "price": "xx.xx",
+      "image": ""
+    },
+    {
+      "id": 456,
+      "product_name": "",
+      "price": "xx.xx",
+      "image": ""
+    }
+  ],
+  "products_add_cart": {
+    "status_code": "0",
+    "status_message": "success",
+    "point": "7",
+    "total": "755.985",
+    "cart_id": "2",
+    "payload": [
+      {
+        "id": 123,
+        "product_name": "OMG-Grossip Girl",
+        "price": "xx.xx"
+      }
     ]
+  },
+  "calculate": {
+    "shipping_id": 1,
+    "cart_id": 2
+  },
+  "transaction": {
+    "point": "7",
+    "total": "755.985",
+    "shipping_free": "40"
+  }
 }
