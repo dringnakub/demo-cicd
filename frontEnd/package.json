@@ -8,6 +8,7 @@
     "build": "next build && next export",
     "start": "next start",
     "test": "jest --verbose --coverage",
+    "test:update": "jest --verbose --coverage --updateSnapshot",
     "lint": "eslint --fix ."
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "babel-jest": "^26.6.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "react-test-renderer": "^17.0.1"
   }
 }
