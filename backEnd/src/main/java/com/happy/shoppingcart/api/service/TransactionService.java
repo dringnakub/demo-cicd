@@ -40,7 +40,11 @@ public class TransactionService {
     }
 
 
-
+    public int getTotalFromTransaction(int tnxId){
+        Transaction transaction = transactionRepo.getOne(tnxId);
+        int total = transaction.getTotal();
+        return total;
+    }
 
 
     public void updateTransaction(int tnxId){

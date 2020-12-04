@@ -16,11 +16,11 @@ public class VisaService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public String verifyVisa(VisaDetail request) throws Exception {
+    public String verifyVisa(VisaDetail request, int total) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String total_amt="755.985";
+        int total_amt=total;
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("card_number", request.getCardNumber());

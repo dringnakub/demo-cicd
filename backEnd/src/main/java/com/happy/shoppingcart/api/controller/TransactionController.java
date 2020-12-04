@@ -26,7 +26,8 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> getVisaDetail(@RequestBody VisaDetail request )throws Exception {
 
         //call verifyVisa
-        String visaApprove = visaService.verifyVisa(request);
+        int total = transactionService.getTotalFromTransaction(request.getTransactionId());
+        String visaApprove = visaService.verifyVisa(request,total);
         //call sentToKerry
 
         TransactionResponse response = new TransactionResponse("12345","123456");
