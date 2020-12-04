@@ -22,5 +22,5 @@ public class Shipping {
     private BigDecimal shippingRate;
 
     @Column(name = "shipping_name")
-    private int shippingName;
+    private String shippingName;
 }

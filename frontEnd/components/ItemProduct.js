@@ -13,7 +13,7 @@ function ItemProduct({ className, data }) {
             </div>
           </Col>
           <Col>
-            <h5>{data.name}</h5>
+            <h5>{data.product_name}</h5>
           </Col>
           <Col xs={2}>
             <p>{data.price}</p>
