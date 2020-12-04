@@ -4,6 +4,7 @@ import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import Route from 'next/router'
 import ItemProduct from '../components/ItemProduct'
+import axios from 'axios'
 
 
 export default class ConfirmOrder extends React.Component {
@@ -22,71 +23,18 @@ export default class ConfirmOrder extends React.Component {
       country: "",
       tel: ""
     },
-    products: [
-      {
-        id: "123",
-        image: "17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
-        name: "43 Piece Dinner Set",
-        price: "12.95 USD",
-      },
-      {
-        id: "1234",
-        image: "61uc4bgUPlL._AC_SL1500_.jpg",
-        name: "Balance Training Bicycle",
-        price: "119.95 USD",
-      },
-    ],
-
-  }
-
-  createCookies() {
-    const cart = [{
-      product_id: 1,
-      productName: '43 Piece dinner Set',
-      productPrice: 12.95,
-      productImage: 'https://i.pinimg.com/474x/17/43/2f/17432f12ec88c0d0ea3d0cffc69d25ce.jpg',
-      quantity: 1,
-    }]
-    Cookies.set('cart', JSON.stringify(cart), { expires: 7, path: '' })
-
-    const shipping = {
-      shipping_method: 'kerry',
-      shipping_address: '405/37 ถ.มหิดล',
-      shipping_sub_district: 'ท่าศาลา',
-      shipping_district: 'เมือง',
-      shipping_province: 'เชียงใหม่',
-      shipping_zip_code: '50000',
-      recipient_name: 'ณัฐญา ชุติบุตร',
-      recipient_phone_number: '0970809292',
+    cart: {
+      payload: []
     }
-    Cookies.set('shipping', JSON.stringify(shipping), { expires: 7, path: '' })
   }
 
-
-  submitOrder() {
-    const cartItems = Cookies.getJSON('cart')
-    const cart = cartItems.map(({ product_id, quantity }) => ({ product_id, quantity }))
-    const shipping = Cookies.getJSON('shipping')
-
-    fetch('/api/v1/order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        cart,
-        ...shipping,
-      }),
-    })
-      .then((response) => response.json())
-      .then((order) => {
-        if (order.order_id) {
-          Cookies.set('order', JSON.stringify(order), { expires: 7, path: '' })
-          Route.push('/Payment')
-        }
+  componentDidMount() {
+    axios.get("http://localhost:4000/products_add_cart").then((result) => {
+      console.log('result', result)
+      this.setState({
+        cart: result.data
       })
-  }
-
-  handleChange(event) {
-    this.setState({ address1: event.target.value });
+    })
   }
 
   submitForm(event) {
@@ -98,8 +46,6 @@ export default class ConfirmOrder extends React.Component {
   }
 
   render() {
-    this.createCookies()
-    const productList = Cookies.getJSON('cart')
     return (
       <Container>
         <Row>
@@ -185,7 +131,7 @@ export default class ConfirmOrder extends React.Component {
           <Row>
             <Col>รายการสินค้า</Col>
           </Row>
-          {this.state.products.map((product) => (
+          {this.state.cart.payload.map((product) => (
             <Row key={product.id}>
               <Col>
                 <ItemProduct className="mt-2" data={product} />
@@ -197,7 +143,7 @@ export default class ConfirmOrder extends React.Component {
             <Col>
               <Row>
                 <Col>POINT</Col>
-                <Col id="point_amount">12</Col>
+                <Col id="point_amount">{this.state.cart.point}</Col>
                 <Col>Point</Col>
               </Row>
               <Row>

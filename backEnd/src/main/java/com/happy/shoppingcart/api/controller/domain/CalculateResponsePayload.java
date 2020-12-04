@@ -13,7 +13,10 @@ public class CalculateResponsePayload {
 
     @JsonProperty("product_name")
     private String productName;
-    
+
     @JsonProperty("price")
     private BigDecimal price;
+    
+    @JsonProperty("img")
+    private String img;
 }
