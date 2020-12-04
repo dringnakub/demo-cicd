@@ -7,7 +7,7 @@
 
 # Start JSON Server
 
-```json-server --watch db.json --routes routes.json```
+```json-server --watch products.json --routes routes.json --middlewares hello.js```
 
 
 

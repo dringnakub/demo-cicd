@@ -19,7 +19,28 @@ module.exports = (req, res, next) => {
         res.jsonp({
             "transaction_id": "10011"
         });
+    } else if (req.path === '/visa/api/verify') {
+        res.jsonp({
+            "status_code": "00",
+            "status_message": "APPROVE",
+        });
     }
+    else if (req.path === '/kerry/api/create_tracking') {
+
+        let trackingNum = 'SHP' + Math.floor((Math.random() * 10000000) + 1);
+
+        res.jsonp({
+            "status_code": "0",
+            "status_message": "success",
+            "tracking_num": trackingNum
+        });
+    }
+
+
+
+
+
+
     else { next(); }
 
 }

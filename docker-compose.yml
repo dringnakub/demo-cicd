@@ -1,12 +1,5 @@
 version: '3.3'
 services:
-  backend:
-    image: shopping-cart:0.0.1-SNAPSHOT
-    restart: always
-    ports:
-      - '8080:8080'
-    expose:
-      - '8080'
   db:
     image: mysql:8.0.22
     restart: always
@@ -28,6 +21,19 @@ services:
     volumes:
       - ./my-db:/var/lib/mysql
       - ./databaseScript/:/docker-entrypoint-initdb.d/
+  backend:
+    depends_on: 
+      - db
+    build:
+      context: ./backEnd
+      dockerfile: Dockerfile
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/db
+    restart: always
+    ports:
+      - '8080:8080'
+    expose:
+      - '8080'
 # Names our volume
 volumes:
   my-db:
