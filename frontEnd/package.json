@@ -12,6 +12,7 @@
     "lint": "eslint --fix ."
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "bootstrap": "^4.5.2",
     "isomorphic-unfetch": "^3.0.0",
     "jest-worker": "^26.3.0",
