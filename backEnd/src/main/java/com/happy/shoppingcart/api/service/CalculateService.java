@@ -46,6 +46,7 @@ public class CalculateService {
         calculateResponsePayload.setProductId(product.getProductId());
         calculateResponsePayload.setPrice(product.getPrice().setScale(2));
         calculateResponsePayload.setProductName(product.getProductName());
+        calculateResponsePayload.setImg(product.getImg());
         List<CalculateResponsePayload> payload = new ArrayList<>();
         payload.add(calculateResponsePayload);
         calculateReponse.setPayload(payload);
