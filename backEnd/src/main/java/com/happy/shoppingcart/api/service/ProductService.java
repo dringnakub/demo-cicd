@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +62,8 @@ public class ProductService {
         LoyaltyConfig dtLoyalty = this.getLoyalty(1);
         Currency currencyTHB = this.getCurrency("USB");
         BigDecimal thbPrice = dtProduct.getPrice().multiply(currencyTHB.getExcRate());
-        BigDecimal pointTotal = thbPrice.divide(BigDecimal.valueOf(dtLoyalty.getPointRate()));
+        BigDecimal pointTotal = thbPrice.divide(BigDecimal.valueOf(dtLoyalty.getPointRate()))
+                .setScale(0, RoundingMode.FLOOR);
         BigDecimal totalWithShipping = thbPrice.add(dtShipping.getShippingRate());
         payLoad.setProductId(dtProduct.getProductId());
         payLoad.setProductName(dtProduct.getProductName());
