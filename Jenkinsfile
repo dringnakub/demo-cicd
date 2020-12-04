@@ -24,7 +24,7 @@ pipeline {
 
     stage('run build backend') {
       steps {
-        sh 'mvn clean package'
+        sh 'cd backEnd && mvn clean package'
       }
     }
 
