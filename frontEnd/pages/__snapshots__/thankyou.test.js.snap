@@ -65,14 +65,18 @@ exports[`PaymentSuccess should render correctly 1`] = `
       className="col"
     >
       <p
-        id="order_id"
         style={
           Object {
             "textAlign": "center",
           }
         }
       >
-        Order ID : 123
+        Order ID : 
+        <span
+          id="order_id"
+        >
+          123
+        </span>
       </p>
     </div>
   </div>
@@ -83,14 +87,18 @@ exports[`PaymentSuccess should render correctly 1`] = `
       className="col"
     >
       <p
-        id="tracking_id"
         style={
           Object {
             "textAlign": "center",
           }
         }
       >
-        Tracking ID : 456
+        Tracking ID : 
+        <span
+          id="tracking_id"
+        >
+          456
+        </span>
       </p>
     </div>
   </div>
