@@ -3,7 +3,7 @@ import { Container, Row, Button, Col, Form } from 'react-bootstrap'
 import fetch from 'isomorphic-unfetch'
 import Cookies from 'js-cookie'
 import Route from 'next/router'
-import CartItem from '../components/CartItem'
+import ItemProduct from '../components/ItemProduct'
 
 
 export default class ConfirmOrder extends React.Component {
@@ -21,7 +21,22 @@ export default class ConfirmOrder extends React.Component {
       postcode: "",
       country: "",
       tel: ""
-    }
+    },
+    products: [
+      {
+        id: "123",
+        image: "17432f12ec88c0d0ea3d0cffc69d25ce.jpg",
+        name: "43 Piece Dinner Set",
+        price: "12.95 USD",
+      },
+      {
+        id: "1234",
+        image: "61uc4bgUPlL._AC_SL1500_.jpg",
+        name: "Balance Training Bicycle",
+        price: "119.95 USD",
+      },
+    ],
+
   }
 
   createCookies() {
@@ -77,6 +92,9 @@ export default class ConfirmOrder extends React.Component {
   submitForm(event) {
     event.preventDefault()
     console.log(this.state)
+    Route.push("/payment");
+
+
   }
 
   render() {
@@ -90,18 +108,34 @@ export default class ConfirmOrder extends React.Component {
               ยืนยันคำสั่งซื้อ
             </h4>
           </Col>
-          <hr style={{ width: "100%" }} />
+          <hr className="w-100" />
         </Row>
         <Row>
           <Col lg={4}>
-            <h4>
-              Shipping Address:
-            </h4>
+            <h6>
+              Shipping Method:
+            </h6>
           </Col>
-          <hr style={{ width: "100%" }} />
         </Row>
-        <Form style={{ "width": "100%" }} onSubmit={this.submitForm}>
-          <Form.Group as={Row} controlId="formHorizontalAddress1">
+        <Row>
+          <Col>
+            <Form.Check
+              defaultChecked={true}
+              type="radio"
+              label="Kerry"
+            />
+          </Col>
+        </Row>
+
+        <Row >
+          <Col lg={4}>
+            <h6>
+              Shipping Address:
+            </h6>
+          </Col>
+        </Row>
+        <Form className="w-100" onSubmit={this.submitForm}>
+          <Form.Group as={Row} controlId="ADDR1_TEXTBOX">
             <Form.Label column lg={2}>
               Address1
             </Form.Label>
@@ -112,7 +146,7 @@ export default class ConfirmOrder extends React.Component {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formHorizontalAddress2">
+          <Form.Group as={Row} controlId="ADDR2_TEXTBOX">
             <Form.Label column lg={2}>
               Address2
               </Form.Label>
@@ -121,7 +155,7 @@ export default class ConfirmOrder extends React.Component {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formHorizontalPostCode">
+          <Form.Group as={Row} controlId="POST_TEXTBOX">
             <Form.Label column lg={2}>
               Postcode
             </Form.Label>
@@ -130,7 +164,7 @@ export default class ConfirmOrder extends React.Component {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formHorizontalCountry">
+          <Form.Group as={Row} controlId="COUNTRY_TEXTBOX">
             <Form.Label column lg={2}>
               Country
             </Form.Label>
@@ -139,7 +173,7 @@ export default class ConfirmOrder extends React.Component {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="formHorizontalTel">
+          <Form.Group as={Row} controlId="TEL_TEXBOX">
             <Form.Label column lg={2}>
               Tel
             </Form.Label>
@@ -147,45 +181,39 @@ export default class ConfirmOrder extends React.Component {
               <Form.Control type="text" />
             </Col>
           </Form.Group>
-
-
-          <Form.Group as={Row} controlId="buttonSubmit">
-            <Col lg={{ span: 10, offset: 2 }}>
-              <Button type="submit">Sign in</Button>
+          <Row>
+            <Col>รายการสินค้า</Col>
+          </Row>
+          {this.state.products.map((product) => (
+            <Row key={product.id}>
+              <Col>
+                <ItemProduct className="mt-2" data={product} />
+              </Col>
+            </Row>
+          ))}
+          <Row>
+            <Col>รายการชำระเงิน</Col>
+            <Col>
+              <Row>
+                <Col>POINT</Col>
+                <Col id="point_amount">12 point</Col>
+              </Row>
+              <Row>
+                <Col>ค่าจัดส่ง</Col>
+                <Col id="shipping_amount">2.00 USD</Col>
+              </Row>
+              <Row>
+                <Col>รวมทั้งสิ้น</Col>
+                <Col id="total_amount">14.95 USD</Col>
+              </Row>
             </Col>
-          </Form.Group>
+          </Row>
+          <Row>
+            <Col className="text-right">
+              <Button id="confirmPayment" type="submit">Next</Button>
+            </Col>
+          </Row>
         </Form>
-        <Row>
-          <Col>รายการชำระเงิน</Col>
-          <Col>
-            <Row>
-              <Col>ค่าสินค้า</Col>
-              <Col id="totalProductPrice">12.95 USD</Col>
-            </Row>
-            <Row>
-              <Col>ค่าจัดส่ง</Col>
-              <Col id="totalShippingCharge">2.00 USD</Col>
-            </Row>
-            <Row>
-              <Col>รวมทั้งสิ้น</Col>
-              <Col id="totalAmount">14.95 USD</Col>
-            </Row>
-          </Col>
-        </Row>
-        <Row>
-          <Col>รายการสินค้า</Col>
-        </Row>
-        <Row>
-          {productList && <CartItem item={productList} />}
-        </Row>
-        <Row>
-          <Col>
-            <Button id="editAddress">แก้ไขที่อยู่จัดส่ง</Button>
-          </Col>
-          <Col>
-            <Button id="confirmPayment" onClick={() => this.submitOrder()}>ยืนยันคำสั่งซื้อและชำระเงิน</Button>
-          </Col>
-        </Row>
       </Container>
     )
   }
