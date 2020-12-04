@@ -26,11 +26,14 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> getVisaDetail(@RequestBody VisaDetail request )throws Exception {
 
         //call verifyVisa
-
         String visaApprove = visaService.verifyVisa(request);
         //call sentToKerry
 
-        TransactionResponse response = new TransactionResponse(visaApprove,"123456");
+        TransactionResponse response = new TransactionResponse("12345","123456");
+        //update transaction
+        transactionService.updateTransaction(request.getTransactionId());
+        //update product quantity
+        transactionService.updateProductQuantity(123);
         ResponseEntity<TransactionResponse> responseEntity = ResponseEntity.status(HttpStatus.OK).body(response);
         return responseEntity;
     }
