@@ -1,5 +1,6 @@
 {
     "/api/v1/products/list*": "/products",
     "/api/v1/products/add_cart*": "/products_add_cart",
-    "/api/v1/products/transaction": "/transaction"
+    "/api/v1/products/transaction": "/transaction",
+    "/api/v1/get_shipping": "/shipping"
 }

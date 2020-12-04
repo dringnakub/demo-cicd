@@ -40,6 +40,10 @@
       }
     ]
   },
+  "shipping": {
+    "shipping_id": 1,
+    "shipping": "Kerry"
+  },
   "calculate": {
     "shipping_id": 1,
     "cart_id": 2
