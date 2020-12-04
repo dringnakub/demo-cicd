@@ -1,15 +1,20 @@
 package com.happy.shoppingcart.api.controller;
 
 
-import com.happy.shoppingcart.api.controller.domain.TransactionResponse;
-import com.happy.shoppingcart.api.service.domain.VisaDetail;
-import org.springframework.http.HttpStatus;
+import com.happy.shoppingcart.api.controller.domain.TransactionGetResponse;
+import com.happy.shoppingcart.api.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping(path = "/api/v1/transaction")
 public class TransactionController {
-
+    @Autowired
+    private TransactionService transactionService;
     //@PutMapping
     //public ResponseEntity<TransactionResponse> getVisaDetail(@RequestHeader(name = "X-Correlation-Id", required = true) String correlationId,
      //                                                 @RequestBody VisaDetail request )throws Exception {
@@ -18,4 +23,9 @@ public class TransactionController {
         //return responseEntity;
     //}
 
+    @GetMapping
+    public ResponseEntity<TransactionGetResponse> getTransactionByID (@RequestParam("transaction_id") int id) {
+        var response = transactionService.getTransactionById(id);
+        return  ResponseEntity.ok().body(response);
+    }
 }
