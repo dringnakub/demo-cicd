@@ -50,6 +50,7 @@ pipeline {
   post {
       always {
           junit 'backEnd/**/target/surefire-reports/TEST-*.xml'
+          sh 'docker-compose down -v'
       }
   }
 }
