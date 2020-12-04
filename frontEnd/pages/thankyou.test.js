@@ -21,20 +21,27 @@ nextRouter.default.push = jest.fn()
 
 describe('PaymentSuccess', () => {
   it('should render correctly', () => {
+    // arrange
     const component = renderer.create(
       <PaymentSuccess/>,
     )
     const json = component.toJSON()
+
+    // assert
     expect(json).toMatchSnapshot()
   })
 
-  it('should route to index page after click OK button', () => {
+  it('should call for route to index page (/) after click on OK button', () => {
+    // arrange
     const component = renderer.create(
       <PaymentSuccess/>,
     )
     const testInstance = component.root
-    testInstance.findByType(Button).props.onClick()
 
+    // action
+    testInstance.findByType(Button).props.onClick() // OK button
+
+    // assert
     expect(nextRouter.default.push).toHaveBeenCalledWith('/')
   })
 })
