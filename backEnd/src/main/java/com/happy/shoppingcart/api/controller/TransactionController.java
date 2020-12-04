@@ -13,6 +13,8 @@ import com.happy.shoppingcart.api.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping("/api/v1/transaction")
 public class TransactionController {
@@ -26,7 +28,7 @@ public class TransactionController {
     public ResponseEntity<TransactionResponse> getVisaDetail(@RequestBody VisaDetail request )throws Exception {
 
         //call verifyVisa
-        int total = transactionService.getTotalFromTransaction(request.getTransactionId());
+        BigDecimal total = transactionService.getTotalFromTransaction(request.getTransactionId());
         String visaApprove = visaService.verifyVisa(request,total);
         //call sentToKerry
 

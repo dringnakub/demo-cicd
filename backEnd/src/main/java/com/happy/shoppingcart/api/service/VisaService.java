@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 
 
 @Service
@@ -16,11 +17,11 @@ public class VisaService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public String verifyVisa(VisaDetail request, int total) throws Exception {
+    public String verifyVisa(VisaDetail request, BigDecimal total) throws Exception {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        int total_amt=total;
+        BigDecimal total_amt=total;
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("card_number", request.getCardNumber());

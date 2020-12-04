@@ -40,9 +40,9 @@ public class TransactionService {
     }
 
 
-    public int getTotalFromTransaction(int tnxId){
+    public BigDecimal getTotalFromTransaction(int tnxId){
         Transaction transaction = transactionRepo.getOne(tnxId);
-        int total = transaction.getTotal();
+        BigDecimal total = transaction.getTotal();
         return total;
     }
 
