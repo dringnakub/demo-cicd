@@ -1,6 +1,7 @@
 package com.happy.shoppingcart.api.controller;
 
 import com.happy.shoppingcart.api.controller.domain.CalculateReponse;
+import com.happy.shoppingcart.api.controller.domain.ProductRequest;
 import com.happy.shoppingcart.api.controller.domain.ProductResponse;
 import com.happy.shoppingcart.api.service.CalculateService;
 
@@ -18,19 +19,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
-    
+
     @Autowired
     private ProductService productService;
 
-    @Autowired private CalculateService calculateService;
+    @Autowired
+    private CalculateService calculateService;
 
-    @GetMapping(value = "add_cart", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "add_cart", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CalculateReponse> addCart(@RequestParam(name = "product_id") Integer productId,
-                                            @RequestParam(name = "cart_id", required = false) Integer cartId){
+                                                    @RequestParam(name = "cart_id", required = false) Integer cartId) {
         CalculateReponse reponse = calculateService.calculatePrice(productId);
         return ResponseEntity.ok().body(reponse);
     }
-    
+
     @GetMapping("list")
     public ResponseEntity<ProductResponse> getProductList(
             @RequestParam(name = "age", required = false) Integer age,
@@ -57,10 +59,11 @@ public class ProductController {
     }
 
     @PostMapping("calculate")
-    public ProductResponse calculateAll() {
-        ProductResponse response = new ProductResponse();
-        response.setStatusCode(200);
-        return response;
+    public ResponseEntity<ProductResponse> calculateAll(@RequestBody ProductRequest body) {
+        ProductResponse result = productService.calculateAll(body.getShippingId(), body.getCartId());
+        result.setStatusCode(200);
+        result.setMessage("success");
+        return ResponseEntity.ok(result);
     }
 
 }

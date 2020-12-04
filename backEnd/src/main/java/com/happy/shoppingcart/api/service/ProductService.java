@@ -51,7 +51,7 @@ public class ProductService {
         return result.get();
     }
 
-    public ProductResponse calculate(int shippingId, int cartId) {
+    public ProductResponse calculateAll(int shippingId, int cartId) {
         ProductResponse response = new ProductResponse();
         ProductPayload payLoad = new ProductPayload();
         ShoppingCart dtCart = this.getCart(cartId);
@@ -62,12 +62,10 @@ public class ProductService {
         BigDecimal totalWithShipping = dtProduct.getPrice().add(dtShipping.getShippingRate());
         payLoad.setProductId(dtProduct.getProductId());
         payLoad.setProductName(dtProduct.getProductName());
-        payLoad.setPrice(dtProduct.getPrice());
+        payLoad.setPrice(dtProduct.getPrice().doubleValue());
 
-        response.setStatusCode(200);
         response.setCartId(dtCart.getCartId());
-        response.setMessage("Successfully");
-        response.setPoint(pointTotal.intValue());
+        response.setPoint(pointTotal);
         response.setTotalWithShip(totalWithShipping);
         response.setPayload(Arrays.asList(payLoad));
         return response;
