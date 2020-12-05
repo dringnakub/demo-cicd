@@ -43,7 +43,7 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<TransactionGetResponse> getTransactionByID (@RequestParam("transaction_id") int id) {
-        // Test with ngrok //
+        // Test with ngrok with web hook//
         TransactionGetResponse response = transactionService.getTransactionById(id);
         return  ResponseEntity.ok().body(response);
     }
