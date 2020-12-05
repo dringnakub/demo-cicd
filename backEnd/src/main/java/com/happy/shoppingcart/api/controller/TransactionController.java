@@ -43,7 +43,6 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<TransactionGetResponse> getTransactionByID (@RequestParam("transaction_id") int id) {
-        // Test cicd test myname is Komsan Kawichai //
         TransactionGetResponse response = transactionService.getTransactionById(id);
         return  ResponseEntity.ok().body(response);
     }
